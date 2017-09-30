@@ -1,4 +1,4 @@
-export default function() => {
+export default function(state={}) {
   return [
     { value: '1' },
     { value: '2' },

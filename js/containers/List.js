@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import ListItems from './ListItems';
+import ListItems from '../components/ListItems';
 
 
-export default class List extends Component {
+class List extends Component {
 
   render() {
 
-    const theList = this.state.theList;
+    const theList = this.props.theList;
 
     return (
       <ul>

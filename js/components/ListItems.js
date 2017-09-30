@@ -6,10 +6,10 @@ export default class ListItems extends Component {
 
     var listItems = this.props.myList.map((item, i) =>
       <li
-        key={"key_"+i}
+        key={"key_"+(i+1)}
         className="list-item"
       >
-        {item}
+        {item.value}
       </li>
     );
 
