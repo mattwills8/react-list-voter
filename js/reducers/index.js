@@ -3,7 +3,7 @@ import listItemsReducer from './reducer_listItems';
 
 const rootReducer = combineReducers({
   //state: (state = {}) => state
-  listItems: listItemsReducer
+  theList: listItemsReducer
 })
 
 export default rootReducer;

@@ -8,7 +8,7 @@ export default class List extends Component {
 
   render() {
 
-    const theList = ['1','2','3','4','another'];
+    const theList = this.state.theList;
 
     return (
       <ul>
@@ -23,7 +23,7 @@ export default class List extends Component {
 
 function mapStateToProps(state) {
   // GLUE BETWEEN REACT AND REDUX
-  //whatever is returned will show up as props inside of List
+  //whatever is returned will show up as props inside of List (because it's connected below)
   //whenever state changes, this function will re run and List will re render
   return {
     theList: state.theList
