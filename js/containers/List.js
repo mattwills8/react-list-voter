@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 //action creators
 import { addListItem } from '../actions';
+import { increaseVote } from '../actions';
 
 //components
 import ListItems from '../components/ListItems';
@@ -22,11 +23,12 @@ class List extends Component {
         <ul>
           <ListItems
             theList={theList}
+            increaseVote={this.props.increaseVote}
           />
         </ul>
         <AddListItemButton
           theList={theList}
-          onClick={this.props.handleClick}
+          onClick={this.props.addListItem}
         />
       </div>
     );
@@ -45,7 +47,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   //anything returned from this function will end up as props on List
   //whenever addListItem is called, the result should be passed to all our reducers
-  return bindActionCreators({ handleClick: addListItem }, dispatch)
+  return bindActionCreators({
+      addListItem   : addListItem,
+      increaseVote  : increaseVote
+    }
+    , dispatch
+  )
 }
 
 //promotes List from component to container

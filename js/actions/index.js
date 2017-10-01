@@ -7,9 +7,10 @@ export function addListItem(theList) {
   };
 }
 
-export function increaseVote(listItem) {
+export function increaseVote(theList, targetListItemId) {
   return {
     type: 'INCREASE_VOTE',
-    payload: listItem
+    payload: theList,
+    toIncrease: targetListItemId
   }
 }

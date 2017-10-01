@@ -13,10 +13,25 @@ export default function(state=defaultState, action) {
   switch(action.type) {
     case 'ADD_LIST_ITEM':
 
+      var idList = [];
+      action.payload.forEach((element) => {
+        idList.push(element.id);
+      });
+      var maxId = Math.max(...idList);
 
+      return [...action.payload, { id:(maxId+1), value:'new', votes:0 }];
 
-      return [...action.payload, { value:'new', votes:0 }];
+    case 'INCREASE_VOTE':
 
-    default: return state
+      action.payload.forEach((listItem) => {
+        if(listItem.id === targetListItemId){
+          litItem.votes ++;
+        }
+      });
+
+      return action.payload;
+
+    default:
+      return state
   }
 }
