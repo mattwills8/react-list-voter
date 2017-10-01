@@ -6,3 +6,10 @@ export function addListItem(theList) {
     payload: theList
   };
 }
+
+export function increaseVote(listItem) {
+  return {
+    type: 'INCREASE_VOTE',
+    payload: listItem
+  }
+}
