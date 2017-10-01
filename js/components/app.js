@@ -12,7 +12,9 @@ const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 class App extends React.Component {
   render() {
-    return <List />;
+    return (
+      <List />
+    );
   }
 }
 

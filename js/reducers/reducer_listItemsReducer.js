@@ -1,8 +1,8 @@
 const defaultState = [
-  { value: '1' },
-  { value: '2' },
-  { value: '3' },
-  { value: '4' }
+  { value: '1', votes:5 },
+  { value: '2', votes:0 },
+  { value: '3', votes:1 },
+  { value: '4', votes:2 }
 ];
 
 //state argument is not application state
