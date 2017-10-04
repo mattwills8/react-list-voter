@@ -31,6 +31,7 @@ export default function(state=defaultState, action) {
     case 'DECREASE_VOTE':
       return changeVote(action.payload.theList,action.payload.targetListItemId,'decrease');
 
+
     default:
       return state
   }
@@ -47,7 +48,7 @@ function changeVote(theList,idToChange,type) {
 
   let currentVotes = newList.getIn([indexOfListToUpdate,'votes'])
 
-  if(type !== ('increase' || 'decrease')){
+  if(!['increase','decrease'].includes(type)){
     console.log('Error... changeVote only takes increase or decrease as type argument');
     return newList.toJS();
   }

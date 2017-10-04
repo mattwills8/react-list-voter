@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 //action creators
 import { addListItem } from '../actions';
-import { increaseVote } from '../actions';
+import { increaseVote, decreaseVote } from '../actions';
 
 //components
 import ListItems from '../components/ListItems';
@@ -24,6 +24,7 @@ class List extends Component {
           <ListItems
             theList={theList}
             increaseVote={this.props.increaseVote}
+            decreaseVote={this.props.decreaseVote}
           />
         </ul>
         <AddListItemButton
@@ -49,7 +50,8 @@ function mapDispatchToProps(dispatch) {
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
       addListItem   : addListItem,
-      increaseVote  : increaseVote
+      increaseVote  : increaseVote,
+      decreaseVote  : decreaseVote
     }
     , dispatch
   )

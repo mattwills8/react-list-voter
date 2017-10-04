@@ -12,7 +12,8 @@ export default class ListItems extends Component {
         key={"key_"+(i+1)}
         item={item}
         i={i}
-        increaseVote={this.props.increaseVote} />
+        increaseVote={this.props.increaseVote}
+        decreaseVote={this.props.decreaseVote} />
     );
 
     return listItems;

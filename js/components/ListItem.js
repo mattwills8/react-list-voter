@@ -7,10 +7,15 @@ export default class ListItem extends Component {
     super(props);
 
     this.increaseVote = this.increaseVote.bind(this);
+    this.decreaseVote = this.decreaseVote.bind(this);
   }
 
   increaseVote() {
     this.props.increaseVote(this.props.theList, this.props.i);
+  }
+
+  decreaseVote() {
+    this.props.decreaseVote(this.props.theList, this.props.i);
   }
 
   render() {
@@ -29,7 +34,9 @@ export default class ListItem extends Component {
         <div className="col-9">
           {this.props.item.value} id: {this.props.item.id}
         </div>
-        <div className="col-1 vote-button vote-down">
+        <div
+            className="col-1 vote-button vote-down"
+            onClick={() => {this.decreaseVote()}}>
           <i className="fa fa-arrow-down" aria-hidden="true"></i>
         </div>
       </li>

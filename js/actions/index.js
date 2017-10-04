@@ -16,3 +16,13 @@ export function increaseVote(theList, targetListItemId) {
     }
   }
 }
+
+export function decreaseVote(theList, targetListItemId) {
+  return {
+    type: 'DECREASE_VOTE',
+    payload: {
+      theList: theList,
+      targetListItemId: targetListItemId
+    }
+  }
+}
