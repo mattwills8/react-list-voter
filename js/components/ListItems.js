@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FlipMove from 'react-flip-move';
 
 import ListItem from './ListItem';
 
@@ -11,11 +12,14 @@ export default class ListItems extends Component {
         theList={this.props.theList}
         key={"key_"+(i+1)}
         item={item}
-        i={i}
         increaseVote={this.props.increaseVote}
         decreaseVote={this.props.decreaseVote} />
     );
 
-    return listItems;
+    return (
+      <FlipMove>
+        {listItems}
+      </FlipMove>
+    );
   }
 }

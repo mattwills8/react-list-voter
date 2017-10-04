@@ -1,10 +1,10 @@
-import { toJS, fromJS, List } from 'immutable';
+import { toJS, fromJS, List, sort } from 'immutable';
 
 const defaultState = [
-  { id: 0, value: '1', votes:5 },
-  { id: 1, value: '2', votes:0 },
-  { id: 2, value: '3', votes:1 },
-  { id: 3, value: '4', votes:2 }
+  { id: 0, value: 'films', votes:5 },
+  { id: 1, value: 'books', votes:4 },
+  { id: 2, value: 'courses', votes:3 },
+  { id: 3, value: 'walking', votes:2 }
 ];
 
 //state argument is not application state
@@ -57,5 +57,15 @@ function changeVote(theList,idToChange,type) {
 
   newList = newList.setIn([indexOfListToUpdate, 'votes'], newVotes);
 
-  return newList.toJS();
+  return sortListItems(newList.toJS());
+}
+
+function sortListItems(theList) {
+
+  let newList = fromJS(theList);
+  let sortedList = newList.sort(
+    (a, b) => b.get('votes') - a.get('votes')
+  );
+
+  return sortedList.toJS();
 }

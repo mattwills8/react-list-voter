@@ -11,11 +11,11 @@ export default class ListItem extends Component {
   }
 
   increaseVote() {
-    this.props.increaseVote(this.props.theList, this.props.i);
+    this.props.increaseVote(this.props.theList, this.props.item.id);
   }
 
   decreaseVote() {
-    this.props.decreaseVote(this.props.theList, this.props.i);
+    this.props.decreaseVote(this.props.theList, this.props.item.id);
   }
 
   render() {
