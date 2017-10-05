@@ -20,13 +20,11 @@ class List extends Component {
 
     return (
       <div className="list-wrapper">
-        <ul>
-          <ListItems
-            theList={theList}
-            increaseVote={this.props.increaseVote}
-            decreaseVote={this.props.decreaseVote}
-          />
-        </ul>
+        <ListItems
+          theList={theList}
+          increaseVote={this.props.increaseVote}
+          decreaseVote={this.props.decreaseVote}
+        />
         <AddListItemButton
           theList={theList}
           onClick={this.props.addListItem}
