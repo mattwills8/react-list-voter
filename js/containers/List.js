@@ -9,7 +9,7 @@ import { increaseVote, decreaseVote } from '../actions';
 
 //components
 import ListItems from '../components/ListItems';
-import AddListItemButton from '../components/AddListItemButton';
+import AddListItemForm from '../components/AddListItemForm';
 
 
 class List extends Component {
@@ -20,14 +20,14 @@ class List extends Component {
 
     return (
       <div className="list-wrapper">
+        <AddListItemForm
+            theList={theList}
+            onClick={this.props.addListItem}
+          />
         <ListItems
           theList={theList}
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
-        />
-        <AddListItemButton
-          theList={theList}
-          onClick={this.props.addListItem}
         />
       </div>
     );

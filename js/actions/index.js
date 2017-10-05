@@ -1,9 +1,12 @@
-export function addListItem(theList) {
+export function addListItem(theList, valueToAdd) {
   //this is an action creator and needs to return an action
   // ie an object with a type (and payload) property
   return {
     type: 'ADD_LIST_ITEM',
-    payload: theList
+    payload: {
+      theList: theList,
+      valueToAdd: valueToAdd
+    }
   };
 }
 

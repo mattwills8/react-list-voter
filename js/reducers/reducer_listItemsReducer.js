@@ -17,12 +17,12 @@ export default function(state=defaultState, action) {
     case 'ADD_LIST_ITEM':
 
       var idList = [];
-      action.payload.forEach((element) => {
+      action.payload.theList.forEach((element) => {
         idList.push(element.id);
       });
       var maxId = Math.max(...idList);
 
-      return [...action.payload, { id:(maxId+1), value:'new', votes:0 }];
+      return [...action.payload.theList, { id:(maxId+1), value:action.payload.valueToAdd, votes:0 }];
 
 
     case 'INCREASE_VOTE':
