@@ -7,6 +7,12 @@ const defaultState = [
   { id: 3, value: 'walking', votes:2 }
 ];
 
+const listOfLists = [
+  'list1',
+  'list2',
+  'list3'
+]
+
 //state argument is not application state
 //just the state that the reducer is responsible for
 //called when action is dispatched by the app

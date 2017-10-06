@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
 
+import ListItemsTemplate from './ListItemsTemplate';
 import ListItem from './ListItem';
 
 export default class ListItems extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      enterLeaveAnimation: 'accordianVertical'
-    };
-  }
 
   renderList() {
     return (
@@ -31,15 +24,9 @@ export default class ListItems extends Component {
   render(){
 
     return (
-      <FlipMove
-        staggerDurationBy="30"
-        duration={500}
-        enterAnimation={this.state.enterLeaveAnimation}
-        leaveAnimation={this.state.enterLeaveAnimation}
-        typeName="ul"
-        className="container list-wrapper">
+      <ListItemsTemplate>
           {this.renderList()}
-      </FlipMove>
+      </ListItemsTemplate>
     );
   }
 }

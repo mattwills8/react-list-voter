@@ -7,6 +7,7 @@ import ReduxPromise from 'redux-promise';
 import reducers from '../reducers';
 
 import List from '../containers/List';
+import ListSelector from '../containers/ListSelector';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -16,6 +17,7 @@ class App extends React.Component {
     return (
       <div className="row">
         <div className="col-4">
+          <ListSelector />
         </div>
         <div className="col-8">
           <List />
