@@ -1,7 +1,10 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
 
-
+/*
+* input: listOfLists, id of list currently in editor, list to replace it with
+* return: updated listOfLists
+*/
 export function updateListOfLists(listOfLists, selectedListId, newList) {
 
   let newListOfLists = fromJS(listOfLists);
@@ -9,17 +12,16 @@ export function updateListOfLists(listOfLists, selectedListId, newList) {
   return newListOfLists.setIn([selectedListId, 'list'], newList).toJS();
 }
 
-
-
+/*
+* input: listOfLists, id of list currently in editor, if of list item to change, increase or decrease
+* return: updated listOfLists
+*/
 export function changeVote(listOfLists, selectedListId, targetListItemId, type) {
 
   if(!['increase','decrease'].includes(type)){
     console.log('Error... changeVote only takes increase or decrease as type argument');
     return theList;
   }
-
-  console.log(listOfLists);
-  console.log(selectedListId);
 
   let newList = fromJS(getListBySelectedListId(listOfLists, selectedListId));
   let indexOfItemToUpdate = getListItemIndexFromId(newList, targetListItemId);
@@ -37,7 +39,10 @@ export function changeVote(listOfLists, selectedListId, targetListItemId, type) 
 }
 
 
-
+/*
+* input: an array of objects that have a 'votes' property
+* return: same array sorted by 'votes' property largest to smallest
+*/
 export function sortListItemsByVotes(theList) {
 
   let newList = fromJS(theList);
@@ -49,7 +54,10 @@ export function sortListItemsByVotes(theList) {
 }
 
 
-
+/*
+* input: listOfLists, id of list currently in editor
+* return: list currently in editor as array
+*/
 export function getListBySelectedListId(listOfLists, selectedListId) {
 
   return listOfLists.filter(function( obj ) {
@@ -58,7 +66,10 @@ export function getListBySelectedListId(listOfLists, selectedListId) {
 }
 
 
-
+/*
+* input: immutable List of objects with id proprty, id of target list item
+* return: List index of target list item
+*/
 export function getListItemIndexFromId(immutableList,itemID) {
 
   return immutableList.findIndex(listItem => {
