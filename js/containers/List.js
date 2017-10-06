@@ -16,16 +16,16 @@ class List extends Component {
 
   render() {
 
-    const theList = this.props.theList;
-
     return (
       <div>
         <AddListItemForm
-            theList={theList}
+            listOfLists={this.props.listOfLists}
+            selectedListId={this.props.selectedListId}
             onClick={this.props.addListItem}
           />
         <ListItems
-          theList={theList}
+          listOfLists={this.props.listOfLists}
+          selectedListId={this.props.selectedListId}
           removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
@@ -40,7 +40,8 @@ function mapStateToProps(state) {
   //whatever is returned will show up as props on List (because it's connected below)
   //whenever state changes, this function will re run and List will re render
   return {
-    theList: state.theList
+    listOfLists: state.listOfLists,
+    selectedListId: state.selectedListId
   };
 }
 

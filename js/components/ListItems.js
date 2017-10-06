@@ -5,15 +5,27 @@ import ListItemsTemplate from './ListItemsTemplate';
 import ListItem from './ListItem';
 
 export default class ListItems extends Component {
+  constructor(props) {
+    super(props);
+
+    this.renderList = this.renderList.bind(this);
+  }
+
 
   renderList() {
+    let selectedListId =this.props.selectedListId;
+    let theList = this.props.listOfLists.filter(function( obj ) {
+      return obj.id === selectedListId;
+    })[0].list;
+
     return (
-      this.props.theList.map((item, i) =>
+      theList.map((item, i) =>
         <ListItem
-          theList={this.props.theList}
           key={`key_${item.id}`}
           index={i}
           item={item}
+          listOfLists={this.props.listOfLists}
+          selectedListId={this.props.selectedListId}
           removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote} />

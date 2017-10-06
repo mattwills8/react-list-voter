@@ -7,8 +7,8 @@ import listSelectorReducer from './reducer_listSelectorReducer';
 
 const rootReducer = combineReducers({
   //state: (state = {}) => state
-  theList: listItemsReducer,
-  listOfLists: listSelectorReducer
+  listOfLists: listItemsReducer,
+  selectedListId: listSelectorReducer
 });
 
 const store = createStore(rootReducer, /* preloadedState,*/  devToolsEnhancer(

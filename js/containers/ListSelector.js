@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //action creators
-//import { selectList } from '../actions';
+import { selectList } from '../actions';
 
 //components
 import ListItemsTemplate from '../components/ListItemsTemplate';
@@ -17,6 +17,7 @@ class ListSelector extends Component {
         return (
           <li
             key={`key_${item.id}`}
+            onClick={() => this.props.selectList(item.id)}
             >
             {item.name}
           </li>
@@ -45,7 +46,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 
   return bindActionCreators({
-      //addListItem   : addListItem,
+      selectList : selectList,
     }
     , dispatch
   )

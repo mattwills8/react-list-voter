@@ -1,42 +1,53 @@
-export function addListItem(theList, valueToAdd) {
+export function selectList(selectedListId) {
+  return {
+    type: 'SELECT_LIST',
+    payload: {
+      selectedListId: selectedListId,
+    }
+  };
+}
+
+export function addListItem(listOfLists, selectedListId, valueToAdd) {
   //this is an action creator and needs to return an action
   // ie an object with a type (and payload) property
   return {
     type: 'ADD_LIST_ITEM',
     payload: {
-      theList: theList,
+      listOfLists: listOfLists,
+      selectedListId: selectedListId,
       valueToAdd: valueToAdd
     }
   };
 }
 
-export function removeListItem(theList, targetListItemId) {
-  //this is an action creator and needs to return an action
-  // ie an object with a type (and payload) property
+export function removeListItem(listOfLists, selectedListId, targetListItemId) {
   return {
     type: 'REMOVE_LIST_ITEM',
     payload: {
-      theList: theList,
+      listOfLists: listOfLists,
+      selectedListId: selectedListId,
       targetListItemId: targetListItemId
     }
   };
 }
 
-export function increaseVote(theList, targetListItemId) {
+export function increaseVote(listOfLists, selectedListId, targetListItemId) {
   return {
     type: 'INCREASE_VOTE',
     payload: {
-      theList: theList,
+      listOfLists: listOfLists,
+      selectedListId: selectedListId,
       targetListItemId: targetListItemId
     }
   }
 }
 
-export function decreaseVote(theList, targetListItemId) {
+export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
   return {
     type: 'DECREASE_VOTE',
     payload: {
-      theList: theList,
+      listOfLists: listOfLists,
+      selectedListId: selectedListId,
       targetListItemId: targetListItemId
     }
   }

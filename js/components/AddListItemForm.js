@@ -12,7 +12,7 @@ export default class AddListItemButton extends Component {
   }
 
   addItem(valueToAdd) {
-    this.props.onClick(this.props.theList,valueToAdd);
+    this.props.onClick(this.props.listOfLists, this.props.selectedListId, valueToAdd);
   }
 
   handleSubmit(event) {

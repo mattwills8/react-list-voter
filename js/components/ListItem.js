@@ -17,7 +17,7 @@ export default class ListItem extends Component {
 
   handleRemoveButtonClick() {
     if(this.state.removeButtonStatus === 'clicked') {
-      this.props.removeListItem(this.props.theList, this.props.item.id);
+      this.props.removeListItem(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
       this.setState( { removeButtonStatus: 'notClicked' } );
     } else {
       this.setState( { removeButtonStatus: 'clicked' } );
@@ -25,11 +25,11 @@ export default class ListItem extends Component {
   }
 
   increaseVote() {
-    this.props.increaseVote(this.props.theList, this.props.item.id);
+    this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
   }
 
   decreaseVote() {
-    this.props.decreaseVote(this.props.theList, this.props.item.id);
+    this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
   }
 
   renderRemoveButton() {
