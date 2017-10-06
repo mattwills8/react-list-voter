@@ -11,24 +11,29 @@ export function updateListOfLists(listOfLists, selectedListId, newList) {
 
 
 
-export function changeVote(theList,idToChange,type) {
+export function changeVote(listOfLists, selectedListId, targetListItemId, type) {
 
   if(!['increase','decrease'].includes(type)){
     console.log('Error... changeVote only takes increase or decrease as type argument');
     return theList;
   }
 
-  let newList = fromJS(theList);
-  let indexOfListToUpdate = getListItemIndexFromId(newList,idToChange);
+  console.log(listOfLists);
+  console.log(selectedListId);
+
+  let newList = fromJS(getListBySelectedListId(listOfLists, selectedListId));
+  let indexOfItemToUpdate = getListItemIndexFromId(newList, targetListItemId);
 
   let newVotes;
-  let currentVotes = newList.getIn([indexOfListToUpdate,'votes'])
+  let currentVotes = newList.getIn([indexOfItemToUpdate,'votes'])
 
   newVotes = type === 'increase' ? (currentVotes + 1) : (currentVotes - 1);
 
-  newList = newList.setIn([indexOfListToUpdate, 'votes'], newVotes);
+  newList = newList.setIn([indexOfItemToUpdate, 'votes'], newVotes);
 
-  return sortListItemsByVotes(newList.toJS());
+  newList = sortListItemsByVotes(newList.toJS());
+
+  return updateListOfLists(listOfLists, selectedListId, newList);
 }
 
 

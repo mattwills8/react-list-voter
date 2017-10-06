@@ -34,15 +34,15 @@ export default function(state=listOfLists, action) {
       let indexOfItemToRemove = getListItemIndexFromId( theList, action.payload.targetListItemId);
 
       let shortenedList = theList.delete(indexOfItemToRemove).toJS();
-      
+
       return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, shortenedList);
 
 
     case 'INCREASE_VOTE':
-      return changeVote( action.payload.theList, action.payload.targetListItemId, 'increase');
+      return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'increase');
 
     case 'DECREASE_VOTE':
-      return changeVote( action.payload.theList, action.payload.targetListItemId, 'decrease');
+      return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'decrease');
 
 
     default:
