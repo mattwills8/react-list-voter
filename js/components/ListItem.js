@@ -21,25 +21,35 @@ export default class ListItem extends Component {
   render() {
 
     return (
-      <li
-        className="row list-item">
+
+      <div className="row">
+        <li
+          className="col-10 list-item">
+          <div
+            className="row">
+            <div
+              className="col-1 vote-button vote-up"
+              onClick={() => {this.increaseVote()}}>
+              <i className="fa fa-arrow-up" aria-hidden="true"></i>
+            </div>
+            <div className="col-1 votes-wrapper">
+              {this.props.item.votes}
+            </div>
+            <div className="col-9">
+              {this.props.item.value}
+            </div>
+            <div
+                className="col-1 vote-button vote-down"
+                onClick={() => {this.decreaseVote()}}>
+              <i className="fa fa-arrow-down" aria-hidden="true"></i>
+            </div>
+          </div>
+        </li>
         <div
-          className="col-1 vote-button vote-up"
-          onClick={() => {this.increaseVote()}}>
-          <i className="fa fa-arrow-up" aria-hidden="true"></i>
+          className="col-2">
+
         </div>
-        <div className="col-1 votes-wrapper">
-          {this.props.item.votes}
-        </div>
-        <div className="col-9">
-          {this.props.item.value}
-        </div>
-        <div
-            className="col-1 vote-button vote-down"
-            onClick={() => {this.decreaseVote()}}>
-          <i className="fa fa-arrow-down" aria-hidden="true"></i>
-        </div>
-      </li>
+      </div>
     );
 
   };

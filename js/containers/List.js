@@ -19,7 +19,7 @@ class List extends Component {
     const theList = this.props.theList;
 
     return (
-      <div className="list-wrapper">
+      <div className="row">
         <AddListItemForm
             theList={theList}
             onClick={this.props.addListItem}

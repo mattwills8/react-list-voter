@@ -14,7 +14,13 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 class App extends React.Component {
   render() {
     return (
-      <List />
+      <div className="row">
+        <div className="col-4">
+        </div>
+        <div className="col-8">
+          <List />
+        </div>
+      </div>
     );
   }
 }

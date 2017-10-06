@@ -35,7 +35,8 @@ export default class ListItems extends Component {
         duration={500}
         enterAnimation={this.state.enterLeaveAnimation}
         leaveAnimation={this.state.enterLeaveAnimation}
-        typeName="ul">
+        typeName="ul"
+        className="container list-wrapper">
           {this.renderList()}
       </FlipMove>
     );
