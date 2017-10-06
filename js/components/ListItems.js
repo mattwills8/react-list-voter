@@ -21,6 +21,7 @@ export default class ListItems extends Component {
           key={`key_${item.id}`}
           index={i}
           item={item}
+          removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote} />
       )

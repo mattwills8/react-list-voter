@@ -20,16 +20,25 @@ export default function(state=defaultState, action) {
       action.payload.theList.forEach((element) => {
         idList.push(element.id);
       });
-      var maxId = Math.max(...idList);
+
+      //stop maxId returning as 0 when there are no list elements
+      var maxId = idList.length > 0 ? Math.max(...idList) : 0;
 
       return [...action.payload.theList, { id:(maxId+1), value:action.payload.valueToAdd, votes:0 }];
 
+    case 'REMOVE_LIST_ITEM':
+
+      let newList = fromJS(action.payload.theList);
+      let indexOfItemToRemove = getListItemIndexFromId( newList, action.payload.targetListItemId);
+      console.log(indexOfItemToRemove);
+      return newList.delete(indexOfItemToRemove).toJS();
+
 
     case 'INCREASE_VOTE':
-      return changeVote(action.payload.theList,action.payload.targetListItemId,'increase');
+      return changeVote( action.payload.theList, action.payload.targetListItemId, 'increase');
 
     case 'DECREASE_VOTE':
-      return changeVote(action.payload.theList,action.payload.targetListItemId,'decrease');
+      return changeVote( action.payload.theList, action.payload.targetListItemId, 'decrease');
 
 
     default:
@@ -39,28 +48,26 @@ export default function(state=defaultState, action) {
 
 function changeVote(theList,idToChange,type) {
 
-  let newList = fromJS(theList);
-  let newVotes;
-
-  let indexOfListToUpdate = newList.findIndex(listItem => {
-    return listItem.get('id') === idToChange;
-  });
-
-  let currentVotes = newList.getIn([indexOfListToUpdate,'votes'])
-
   if(!['increase','decrease'].includes(type)){
     console.log('Error... changeVote only takes increase or decrease as type argument');
-    return newList.toJS();
+    return theList;
   }
+
+  let newList = fromJS(theList);
+  let indexOfListToUpdate = getListItemIndexFromId(newList,idToChange);
+
+  let newVotes;
+  let currentVotes = newList.getIn([indexOfListToUpdate,'votes'])
 
   newVotes = type === 'increase' ? (currentVotes + 1) : (currentVotes - 1);
 
   newList = newList.setIn([indexOfListToUpdate, 'votes'], newVotes);
 
-  return sortListItems(newList.toJS());
+  return sortListItemsByVotes(newList.toJS());
 }
 
-function sortListItems(theList) {
+
+function sortListItemsByVotes(theList) {
 
   let newList = fromJS(theList);
   let sortedList = newList.sort(
@@ -68,4 +75,11 @@ function sortListItems(theList) {
   );
 
   return sortedList.toJS();
+}
+
+function getListItemIndexFromId(immutableList,itemID) {
+
+  return immutableList.findIndex(listItem => {
+    return listItem.get('id') === itemID;
+  });
 }

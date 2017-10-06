@@ -10,6 +10,18 @@ export function addListItem(theList, valueToAdd) {
   };
 }
 
+export function removeListItem(theList, targetListItemId) {
+  //this is an action creator and needs to return an action
+  // ie an object with a type (and payload) property
+  return {
+    type: 'REMOVE_LIST_ITEM',
+    payload: {
+      theList: theList,
+      targetListItemId: targetListItemId
+    }
+  };
+}
+
 export function increaseVote(theList, targetListItemId) {
   return {
     type: 'INCREASE_VOTE',

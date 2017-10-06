@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //action creators
-import { addListItem } from '../actions';
+import { addListItem, removeListItem } from '../actions';
 import { increaseVote, decreaseVote } from '../actions';
 
 //components
@@ -19,13 +19,14 @@ class List extends Component {
     const theList = this.props.theList;
 
     return (
-      <div className="row">
+      <div>
         <AddListItemForm
             theList={theList}
             onClick={this.props.addListItem}
           />
         <ListItems
           theList={theList}
+          removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
         />
@@ -48,6 +49,7 @@ function mapDispatchToProps(dispatch) {
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
       addListItem   : addListItem,
+      removeListItem: removeListItem,
       increaseVote  : increaseVote,
       decreaseVote  : decreaseVote
     }

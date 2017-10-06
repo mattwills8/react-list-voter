@@ -6,8 +6,13 @@ export default class ListItem extends Component {
   constructor(props) {
     super(props);
 
+    this.removeListItem = this.removeListItem.bind(this);
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
+  }
+
+  removeListItem() {
+    this.props.removeListItem(this.props.theList, this.props.item.id);
   }
 
   increaseVote() {
@@ -47,7 +52,11 @@ export default class ListItem extends Component {
         </li>
         <div
           className="col-2">
-
+          <button
+            className="btn btn-danger"
+            onClick={() => {this.removeListItem()}}
+            >Remove
+          </button>
         </div>
       </div>
     );
