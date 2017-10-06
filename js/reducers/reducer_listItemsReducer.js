@@ -14,7 +14,7 @@ export default function(state=listOfLists, action) {
 
     case 'ADD_LIST_ITEM':
 
-      let theList = getListBySelectedListId(action.payload.listOfLists, action.payload.selectedListId)
+      var theList = getListBySelectedListId(action.payload.listOfLists, action.payload.selectedListId);
 
       var idList = [];
       theList.forEach((element) => {
@@ -26,16 +26,16 @@ export default function(state=listOfLists, action) {
 
       let appendedList = [...theList, { id:(maxId+1), value:action.payload.valueToAdd, votes:0 }];
 
-      console.log(updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, appendedList));
-
       return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, appendedList);
 
     case 'REMOVE_LIST_ITEM':
 
-      let newList = fromJS(action.payload.theList);
-      let indexOfItemToRemove = getListItemIndexFromId( newList, action.payload.targetListItemId);
+      var theList = fromJS(getListBySelectedListId(action.payload.listOfLists, action.payload.selectedListId));
+      let indexOfItemToRemove = getListItemIndexFromId( theList, action.payload.targetListItemId);
 
-      return newList.delete(indexOfItemToRemove).toJS();
+      let shortenedList = theList.delete(indexOfItemToRemove).toJS();
+      
+      return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, shortenedList);
 
 
     case 'INCREASE_VOTE':
