@@ -6,13 +6,22 @@ export default class ListItem extends Component {
   constructor(props) {
     super(props);
 
-    this.removeListItem = this.removeListItem.bind(this);
+    this.state = {
+      removeButtonStatus: 'notClicked'
+    };
+
+    this.handleRemoveButtonClick = this.handleRemoveButtonClick.bind(this);
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
   }
 
-  removeListItem() {
-    this.props.removeListItem(this.props.theList, this.props.item.id);
+  handleRemoveButtonClick() {
+    if(this.state.removeButtonStatus === 'clicked') {
+      this.props.removeListItem(this.props.theList, this.props.item.id);
+      this.setState( { removeButtonStatus: 'notClicked' } );
+    } else {
+      this.setState( { removeButtonStatus: 'clicked' } );
+    }
   }
 
   increaseVote() {
@@ -21,6 +30,29 @@ export default class ListItem extends Component {
 
   decreaseVote() {
     this.props.decreaseVote(this.props.theList, this.props.item.id);
+  }
+
+  renderRemoveButton() {
+
+    let button = {
+      clicked: {
+        class: 'btn-warning',
+        content: 'Sure?'
+      },
+      notClicked: {
+        class: 'btn-danger',
+        content: 'Remove'
+      }
+    }
+    let buttonState = this.state.removeButtonStatus === 'clicked' ? button.clicked : button.notClicked;
+
+    return (
+      <button
+        className={"btn "+buttonState.class}
+        onClick={() => {this.handleRemoveButtonClick()}}
+        >{buttonState.content}
+      </button>
+    );
   }
 
   render() {
@@ -52,11 +84,7 @@ export default class ListItem extends Component {
         </li>
         <div
           className="col-2">
-          <button
-            className="btn btn-danger"
-            onClick={() => {this.removeListItem()}}
-            >Remove
-          </button>
+          {this.renderRemoveButton()}
         </div>
       </div>
     );
