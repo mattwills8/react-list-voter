@@ -1,6 +1,8 @@
 //core
 import React, { Component } from 'react';
 
+import RemoveButton from './RemoveButton';
+
 export default class ListItem extends Component {
 
   constructor(props) {
@@ -10,18 +12,8 @@ export default class ListItem extends Component {
       removeButtonStatus: 'notClicked'
     };
 
-    this.handleRemoveButtonClick = this.handleRemoveButtonClick.bind(this);
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
-  }
-
-  handleRemoveButtonClick() {
-    if(this.state.removeButtonStatus === 'clicked') {
-      this.props.removeListItem(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
-      this.setState( { removeButtonStatus: 'notClicked' } );
-    } else {
-      this.setState( { removeButtonStatus: 'clicked' } );
-    }
   }
 
   increaseVote() {
@@ -30,29 +22,6 @@ export default class ListItem extends Component {
 
   decreaseVote() {
     this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
-  }
-
-  renderRemoveButton() {
-
-    let button = {
-      clicked: {
-        class: 'btn-warning',
-        content: 'Sure?'
-      },
-      notClicked: {
-        class: 'btn-danger',
-        content: 'Remove'
-      }
-    }
-    let buttonState = this.state.removeButtonStatus === 'clicked' ? button.clicked : button.notClicked;
-
-    return (
-      <button
-        className={"btn "+buttonState.class}
-        onClick={() => {this.handleRemoveButtonClick()}}
-        >{buttonState.content}
-      </button>
-    );
   }
 
   render() {
@@ -84,7 +53,10 @@ export default class ListItem extends Component {
         </li>
         <div
           className="col-2">
-          {this.renderRemoveButton()}
+          <RemoveButton
+            btnContent="Remove"
+            onClick={this.props.removeListItem}
+            onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
         </div>
       </div>
     );

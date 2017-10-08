@@ -13,10 +13,17 @@ export default class ListItems extends Component {
 
 
   renderList() {
-    let selectedListId =this.props.selectedListId;
-    let theList = this.props.listOfLists.filter(function( obj ) {
+    let selectedListId = this.props.selectedListId;
+
+    console.log(this.props.listOfLists.filter(function( obj ) {
       return obj.id === selectedListId;
-    })[0].list;
+    }));
+
+    let matchedList = this.props.listOfLists.filter(function( obj ) {
+      return obj.id === selectedListId;
+    });
+
+    let theList = matchedList.length === 0 ? this.props.listOfLists[0].list : matchedList[0].list;
 
     return (
       theList.map((item, i) =>

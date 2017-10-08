@@ -1,3 +1,5 @@
+import { toJS, fromJS, List} from 'immutable';
+
 import { changeVote, sortListItemsByVotes, getListItemIndexFromId } from '../helpers/functions_list';
 
 export default function(state=0, action) {

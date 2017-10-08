@@ -31,6 +31,16 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
   };
 }
 
+export function removeList(listOfLists, listId) {
+  return {
+    type: 'REMOVE_LIST',
+    payload: {
+      listOfLists: listOfLists,
+      listId: listId
+    }
+  };
+}
+
 export function removeListItem(listOfLists, selectedListId, targetListItemId) {
   return {
     type: 'REMOVE_LIST_ITEM',

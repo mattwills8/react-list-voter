@@ -16,9 +16,20 @@ export default function(state=listOfLists, action) {
 
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
+
     case 'ADD_LIST_ITEM':
 
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
+
+
+    case 'REMOVE_LIST':
+
+      var newListOfLists = fromJS(action.payload.listOfLists);
+
+      var indexOfListToRemove = getListItemIndexFromId(newListOfLists,action.payload.listId);
+
+      return newListOfLists.delete(indexOfListToRemove).toJS();
+
 
     case 'REMOVE_LIST_ITEM':
 

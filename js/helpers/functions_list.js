@@ -1,16 +1,6 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
 
-/*
-* input: listOfLists, id of list currently in editor, list to replace it with
-* return: updated listOfLists
-*/
-export function updateListOfLists(listOfLists, selectedListId, newList) {
-
-  let newListOfLists = fromJS(listOfLists);
-
-  return newListOfLists.setIn([selectedListId, 'list'], newList).toJS();
-}
 
 export function addListItems(listOfLists, selectedListId, listItemsArray) {
 
@@ -98,4 +88,16 @@ export function getListItemIndexFromId(immutableList,itemID) {
   return immutableList.findIndex(listItem => {
     return listItem.get('id') === itemID;
   });
+}
+
+
+/*
+* input: listOfLists, id of list currently in editor, list to replace it with
+* return: updated listOfLists
+*/
+export function updateListOfLists(listOfLists, selectedListId, newList) {
+
+  let newListOfLists = fromJS(listOfLists);
+
+  return newListOfLists.setIn([selectedListId, 'list'], newList).toJS();
 }
