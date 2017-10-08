@@ -12,6 +12,29 @@ export function updateListOfLists(listOfLists, selectedListId, newList) {
   return newListOfLists.setIn([selectedListId, 'list'], newList).toJS();
 }
 
+export function addListItems(listOfLists, selectedListId, listItemsArray) {
+
+  let theList = getListBySelectedListId(listOfLists, selectedListId);
+
+  let idList = [];
+  theList.forEach((element) => {
+    idList.push(element.id);
+  });
+  //stop maxId returning as 0 when there are no list elements
+  let maxId = idList.length > 0 ? Math.max(...idList) : 0;
+
+  let appendedList = [...theList];
+
+  listItemsArray.forEach((listItem) => {
+    appendedList = [...appendedList, { id:(maxId+1), values:listItem, votes:0 }];
+    maxId++;
+  })
+
+  console.log(appendedList);
+
+  return updateListOfLists(listOfLists, selectedListId, appendedList);
+}
+
 /*
 * input: listOfLists, id of list currently in editor, if of list item to change, increase or decrease
 * return: updated listOfLists

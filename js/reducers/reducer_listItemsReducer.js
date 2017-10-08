@@ -1,6 +1,6 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
-import { updateListOfLists, changeVote, sortListItemsByVotes, getListBySelectedListId, getListItemIndexFromId } from '../helpers/functions_list';
+import { updateListOfLists, changeVote, sortListItemsByVotes, getListBySelectedListId, getListItemIndexFromId, addListItems } from '../helpers/functions_list';
 import listOfLists from '../data/listOfLists.js';
 
 //state argument is not application state
@@ -12,21 +12,13 @@ export default function(state=listOfLists, action) {
 
   switch(action.type) {
 
+    case 'BULK_ADD_LIST_ITEM':
+
+      return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
+
     case 'ADD_LIST_ITEM':
 
-      var theList = getListBySelectedListId(action.payload.listOfLists, action.payload.selectedListId);
-
-      var idList = [];
-      theList.forEach((element) => {
-        idList.push(element.id);
-      });
-
-      //stop maxId returning as 0 when there are no list elements
-      var maxId = idList.length > 0 ? Math.max(...idList) : 0;
-
-      let appendedList = [...theList, { id:(maxId+1), value:action.payload.valueToAdd, votes:0 }];
-
-      return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, appendedList);
+      return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
 
     case 'REMOVE_LIST_ITEM':
 

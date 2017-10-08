@@ -7,6 +7,17 @@ export function selectList(selectedListId) {
   };
 }
 
+export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
+  return {
+    type: 'BULK_ADD_LIST_ITEM',
+    payload: {
+      listOfLists: listOfLists,
+      selectedListId: selectedListId,
+      valuesToAdd: valuesToAdd
+    }
+  };
+}
+
 export function addListItem(listOfLists, selectedListId, valueToAdd) {
   //this is an action creator and needs to return an action
   // ie an object with a type (and payload) property

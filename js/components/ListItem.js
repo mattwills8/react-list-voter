@@ -73,7 +73,7 @@ export default class ListItem extends Component {
               {this.props.item.votes}
             </div>
             <div className="col-9">
-              {this.props.item.value}
+              {this.props.item.values.name}
             </div>
             <div
                 className="col-1 vote-button vote-down"

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //action creators
-import { addListItem, removeListItem } from '../actions';
+import { bulkAddListItems, addListItem, removeListItem } from '../actions';
 import { increaseVote, decreaseVote } from '../actions';
 
 //components
@@ -21,7 +21,8 @@ class List extends Component {
         <AddListItemForm
             listOfLists={this.props.listOfLists}
             selectedListId={this.props.selectedListId}
-            onClick={this.props.addListItem}
+            bulkAddListItems={this.props.bulkAddListItems}
+            addListItem={this.props.addListItem}
           />
         <ListItems
           listOfLists={this.props.listOfLists}
@@ -49,6 +50,7 @@ function mapDispatchToProps(dispatch) {
   //anything returned from this function will end up as props on List
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
+      bulkAddListItems: bulkAddListItems,
       addListItem   : addListItem,
       removeListItem: removeListItem,
       increaseVote  : increaseVote,
