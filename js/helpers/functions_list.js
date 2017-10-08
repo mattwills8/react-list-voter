@@ -6,12 +6,7 @@ export function addListItems(listOfLists, selectedListId, listItemsArray) {
 
   let theList = getListBySelectedListId(listOfLists, selectedListId);
 
-  let idList = [];
-  theList.forEach((element) => {
-    idList.push(element.id);
-  });
-  //stop maxId returning as 0 when there are no list elements
-  let maxId = idList.length > 0 ? Math.max(...idList) : 0;
+  let maxId = getMaxId(theList) || 0;
 
   let appendedList = [...theList];
 
@@ -19,8 +14,6 @@ export function addListItems(listOfLists, selectedListId, listItemsArray) {
     appendedList = [...appendedList, { id:(maxId+1), values:listItem, votes:0 }];
     maxId++;
   })
-
-  console.log(appendedList);
 
   return updateListOfLists(listOfLists, selectedListId, appendedList);
 }
@@ -88,6 +81,20 @@ export function getListItemIndexFromId(immutableList,itemID) {
   return immutableList.findIndex(listItem => {
     return listItem.get('id') === itemID;
   });
+}
+
+/*
+* input: Array of objects with id property
+* return: maxId or undefined if none were found
+*/
+export function getMaxId(theList) {
+
+  let idList = [];
+  theList.forEach((element) => {
+    idList.push(element.id);
+  });
+  //stop maxId returning as 0 when there are no list elements
+  return idList.length > 0 ? Math.max(...idList) : undefined;
 }
 
 

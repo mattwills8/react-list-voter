@@ -15,10 +15,6 @@ export default class ListItems extends Component {
   renderList() {
     let selectedListId = this.props.selectedListId;
 
-    console.log(this.props.listOfLists.filter(function( obj ) {
-      return obj.id === selectedListId;
-    }));
-
     let matchedList = this.props.listOfLists.filter(function( obj ) {
       return obj.id === selectedListId;
     });

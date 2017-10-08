@@ -1,6 +1,6 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
-import { updateListOfLists, changeVote, sortListItemsByVotes, getListBySelectedListId, getListItemIndexFromId, addListItems } from '../helpers/functions_list';
+import { updateListOfLists, changeVote, sortListItemsByVotes, getListBySelectedListId, getListItemIndexFromId, addListItems, getMaxId } from '../helpers/functions_list';
 import listOfLists from '../data/listOfLists.js';
 
 //state argument is not application state
@@ -12,15 +12,20 @@ export default function(state=listOfLists, action) {
 
   switch(action.type) {
 
-    case 'BULK_ADD_LIST_ITEM':
+    case "ADD_LIST":
 
-      return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
+      var maxId = getMaxId(action.payload.listOfLists) || 0;
+      var newId = maxId === 0 ? 0 : maxId + 1;
 
+      var newListOfLists = fromJS(action.payload.listOfLists);
 
-    case 'ADD_LIST_ITEM':
+      var newList = {
+        name: action.payload.valueToAdd.name,
+        id: newId,
+        list: []
+      }
 
-      return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
-
+      return newListOfLists.insert(newListOfLists.size, newList).toJS();
 
     case 'REMOVE_LIST':
 
@@ -29,6 +34,16 @@ export default function(state=listOfLists, action) {
       var indexOfListToRemove = getListItemIndexFromId(newListOfLists,action.payload.listId);
 
       return newListOfLists.delete(indexOfListToRemove).toJS();
+
+
+    case 'BULK_ADD_LIST_ITEM':
+
+      return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
+
+
+    case 'ADD_LIST_ITEM':
+
+      return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
 
 
     case 'REMOVE_LIST_ITEM':

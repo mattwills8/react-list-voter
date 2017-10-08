@@ -7,6 +7,26 @@ export function selectList(selectedListId) {
   };
 }
 
+export function addList(listOfLists, valueToAdd) {
+  return {
+    type: 'ADD_LIST',
+    payload: {
+      listOfLists: listOfLists,
+      valueToAdd: valueToAdd
+    }
+  };
+}
+
+export function removeList(listOfLists, listId) {
+  return {
+    type: 'REMOVE_LIST',
+    payload: {
+      listOfLists: listOfLists,
+      listId: listId
+    }
+  };
+}
+
 export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   return {
     type: 'BULK_ADD_LIST_ITEM',
@@ -27,16 +47,6 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
       listOfLists: listOfLists,
       selectedListId: selectedListId,
       valueToAdd: valueToAdd
-    }
-  };
-}
-
-export function removeList(listOfLists, listId) {
-  return {
-    type: 'REMOVE_LIST',
-    payload: {
-      listOfLists: listOfLists,
-      listId: listId
     }
   };
 }

@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //action creators
-import { selectList, removeList } from '../actions';
+import { selectList, addList, removeList } from '../actions';
 
 //components
 import ListItemsTemplate from '../components/ListItemsTemplate';
 import RemoveButton from '../components/RemoveButton';
+import AddListForm from '../components/AddListForm';
 
 class ListSelector extends Component {
 
@@ -42,9 +43,15 @@ class ListSelector extends Component {
     console.log(this.props.listOfLists);
 
     return (
-      <ListItemsTemplate>
-          {this.renderListOfLists()}
-      </ListItemsTemplate>
+      <div>
+        <AddListForm
+            listOfLists={this.props.listOfLists}
+            addList={this.props.addList}
+          />
+        <ListItemsTemplate>
+            {this.renderListOfLists()}
+        </ListItemsTemplate>
+      </div>
     );
   }
 }
@@ -60,6 +67,7 @@ function mapDispatchToProps(dispatch) {
 
   return bindActionCreators({
       selectList : selectList,
+      addList    : addList,
       removeList : removeList
     }
     , dispatch
