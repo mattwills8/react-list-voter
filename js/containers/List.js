@@ -11,10 +11,15 @@ import { increaseVote, decreaseVote } from '../actions';
 import ListItems from '../components/ListItems';
 import AddListItemForm from '../components/AddListItemForm';
 
+//helpers
+import { getListObjectBySelectedListId } from '../helpers/functions_list';
+
 
 class List extends Component {
 
   render() {
+
+    var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
 
     return (
       <div>
@@ -24,6 +29,12 @@ class List extends Component {
             bulkAddListItems={this.props.bulkAddListItems}
             addListItem={this.props.addListItem}
           />
+        <div
+          className="row">
+          <h2 className="col-12 text-center">
+            Selected List: {currentListName}
+          </h2>
+        </div>
         <ListItems
           listOfLists={this.props.listOfLists}
           selectedListId={this.props.selectedListId}

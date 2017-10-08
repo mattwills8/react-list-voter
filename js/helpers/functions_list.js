@@ -66,9 +66,19 @@ export function sortListItemsByVotes(theList) {
 */
 export function getListBySelectedListId(listOfLists, selectedListId) {
 
+  return getListObjectBySelectedListId(listOfLists, selectedListId).list;
+}
+
+
+/*
+* input: listOfLists, id of list currently in editor
+* return: list currently in editor as full object
+*/
+export function getListObjectBySelectedListId(listOfLists, selectedListId) {
+
   return listOfLists.filter(function( obj ) {
     return obj.id === selectedListId;
-  })[0].list;
+  })[0];
 }
 
 
