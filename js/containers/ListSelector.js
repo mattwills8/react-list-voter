@@ -40,8 +40,6 @@ class ListSelector extends Component {
 
   render() {
 
-    console.log(this.props.listOfLists);
-
     return (
       <div>
         <AddListForm

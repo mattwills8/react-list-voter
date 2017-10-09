@@ -2,8 +2,15 @@
 
 #app {
 
+  .list-selector {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+
   .list-wrapper {
     text-align: center;
+    max-height: 400px;
+    overflow-y: scroll;
 
     li {
       border: 1px solid grey;

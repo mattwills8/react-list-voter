@@ -16,10 +16,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col-4">
+        <div className="col-4 list-selector">
           <ListSelector />
         </div>
-        <div className="col-8">
+        <div className="col-8 list-editor">
           <List />
         </div>
       </div>
