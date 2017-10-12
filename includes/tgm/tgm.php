@@ -109,7 +109,7 @@ function reactjs_list_voter_register_required_plugins() {
 			'name'        => 'WordPress SEO by Yoast',
 			'slug'        => 'wordpress-seo',
 			'is_callable' => 'wpseo_init',
-		),
+		),*/
 
 	);
 
@@ -208,8 +208,8 @@ function reactjs_list_voter_register_required_plugins() {
 			'contact_admin'                   => __( 'Please contact the administrator of this site for help.', 'reactjs-list-voter' ),
 
 			'nag_type'                        => '', // Determines admin notice type - can only be one of the typical WP notice classes, such as 'updated', 'update-nag', 'notice-warning', 'notice-info' or 'error'. Some of which may not work as expected in older WP versions.
-		),
-		*/
+		),*/
+
 	);
 
 	tgmpa( $plugins, $config );
