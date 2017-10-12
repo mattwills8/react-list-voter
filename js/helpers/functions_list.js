@@ -2,7 +2,7 @@ import { toJS, fromJS, List, sort } from 'immutable';
 
 
 
-export function addListItems(listOfLists, selectedListId, listItemsArray) {
+export function addListItems(listOfLists, selectedListId, listItemsValuesArray) {
 
   let theList = getListBySelectedListId(listOfLists, selectedListId);
 
@@ -10,8 +10,8 @@ export function addListItems(listOfLists, selectedListId, listItemsArray) {
 
   let appendedList = [...theList];
 
-  listItemsArray.forEach((listItem) => {
-    appendedList = [...appendedList, { id:(maxId+1), values:listItem, votes:0 }];
+  listItemsValuesArray.forEach((listItemValues) => {
+    appendedList = [...appendedList, { id:(maxId+1), values:listItemValues, votes:0 }];
     maxId++;
   })
 

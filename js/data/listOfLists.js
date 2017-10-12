@@ -2,7 +2,7 @@ var listOfLists = [
   { name: 'activities',
     id: 0,
     list: [
-      { id: 0, values: { name:'films', postID:'', postContent: {} , postContent: {} }, votes:5 },
+      { id: 0, values: { name:'films', postID:'', postContent: {} }, votes:5 },
       { id: 1, values: { name:'books', postID:'', postContent: {} }, votes:4 },
       { id: 2, values: { name:'courses', postID:'', postContent: {} }, votes:3 },
       { id: 3, values: { name:'walking', postID:'', postContent: {} }, votes:2 }

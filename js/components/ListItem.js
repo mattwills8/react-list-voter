@@ -68,7 +68,7 @@ export default class ListItem extends Component {
             </div>
             <div
               className="col-6">
-              <h6>[the-list-post-id]</h6>
+              <h6>{this.props.item.values.postID}</h6>
             </div>
           </div>
           <div
