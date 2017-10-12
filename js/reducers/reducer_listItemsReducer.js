@@ -1,18 +1,36 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
-import { updateListOfLists, changeVote, sortListItemsByVotes, getListBySelectedListId, getListItemIndexFromId, addListItems, getMaxId } from '../helpers/functions_list';
+import {
+  updateListOfLists,
+  changeVote,
+  sortListItemsByVotes,
+  getListBySelectedListId,
+  getListItemIndexFromId,
+  addListItems,
+  getMaxId
+} from '../helpers/functions_list';
+
+import {
+    ADD_LIST,
+    REMOVE_LIST,
+    BULK_ADD_LIST_ITEM,
+    ADD_LIST_ITEM,
+    REMOVE_LIST_ITEM,
+    INCREASE_VOTE,
+    DECREASE_VOTE
+} from '../actions/types.js';
+
 import listOfLists from '../data/listOfLists.js';
 
 //state argument is not application state
 //just the state that the reducer is responsible for
 //called when action is dispatched by the app
 
-//TODO: FINISH LINKING UP REDUCERS TO NEW LISTOFLISTS USING updateListOfLists()
 export default function(state=listOfLists, action) {
 
   switch(action.type) {
 
-    case "ADD_LIST":
+    case ADD_LIST:
 
       var maxId = getMaxId(action.payload.listOfLists) || 0;
       var newId = maxId === 0 ? 0 : maxId + 1;
@@ -27,7 +45,7 @@ export default function(state=listOfLists, action) {
 
       return newListOfLists.insert(newListOfLists.size, newList).toJS();
 
-    case 'REMOVE_LIST':
+    case REMOVE_LIST:
 
       var newListOfLists = fromJS(action.payload.listOfLists);
 
@@ -36,17 +54,17 @@ export default function(state=listOfLists, action) {
       return newListOfLists.delete(indexOfListToRemove).toJS();
 
 
-    case 'BULK_ADD_LIST_ITEM':
+    case BULK_ADD_LIST_ITEM:
 
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
 
-    case 'ADD_LIST_ITEM':
+    case ADD_LIST_ITEM:
 
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
 
 
-    case 'REMOVE_LIST_ITEM':
+    case REMOVE_LIST_ITEM:
 
       var theList = fromJS(getListBySelectedListId(action.payload.listOfLists, action.payload.selectedListId));
       let indexOfItemToRemove = getListItemIndexFromId( theList, action.payload.targetListItemId);
@@ -56,10 +74,10 @@ export default function(state=listOfLists, action) {
       return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, shortenedList);
 
 
-    case 'INCREASE_VOTE':
+    case INCREASE_VOTE:
       return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'increase');
 
-    case 'DECREASE_VOTE':
+    case DECREASE_VOTE:
       return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'decrease');
 
 
