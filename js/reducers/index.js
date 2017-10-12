@@ -11,8 +11,4 @@ const rootReducer = combineReducers({
   selectedListId: listSelectorReducer
 });
 
-const store = createStore(rootReducer, /* preloadedState,*/  devToolsEnhancer(
-  // Specify name here, actionsBlacklist, actionsCreators and other options if needed
-));
-
 export default rootReducer;

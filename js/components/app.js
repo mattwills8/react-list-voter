@@ -2,15 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import ReduxPromise from 'redux-promise';
+import ReduxPromise from 'redux-promise-middleware';
 
 import reducers from '../reducers';
 
 import List from '../containers/List';
 import ListSelector from '../containers/ListSelector';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
-
+const store = createStore(reducers, /* preloadedState,*/
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(
+    ReduxPromise()
+  )
+);
 
 class App extends React.Component {
   render() {
@@ -28,7 +32,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}>
     <App />
   </Provider>
   , document.querySelector('#app')
