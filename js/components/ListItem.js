@@ -64,16 +64,16 @@ export default class ListItem extends Component {
             className="row">
             <div
               className="col-6">
-              <h5>Post Slug:</h5>
+              <h5>Post ID:</h5>
             </div>
             <div
               className="col-6">
-              <h6>[the-list-post-slug]</h6>
+              <h6>{this.props.item.values.postID}</h6>
             </div>
           </div>
           <div
             className="row">
-            <p>Content will go here</p>
+            <p>Post Content will go here</p>
           </div>
         </div>
       </div>
