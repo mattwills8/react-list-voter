@@ -6,11 +6,7 @@ export default class AddListItemButton extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: {
-                     name: '',
-                     image_url: ''
-                   }
-                 };
+    this.state = { term: {} };
 
     this.addItem = this.addItem.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,20 +22,18 @@ export default class AddListItemButton extends Component {
   }
 
   handleInputChange(event) {
-    this.setState( { term: {
-                        name: event.target.value,
-                        image_url: ''
-                      }
-                    });
+      let term = this.state.term;
+      let name = event.target.name;
+      let value = event.target.value;
+
+      term[name] = value;
+
+      this.setState({term})
   }
 
   handleButtonClick() {
     this.addItem(this.state.term);
-    this.setState( { term: {
-                      name: '',
-                      image_url: ''
-                     }
-                   } );
+    this.setState( { term: {} } );
   }
 
   render(){
@@ -52,7 +46,14 @@ export default class AddListItemButton extends Component {
           <input
             placeholder="Item Name"
             className="form-control add-list-item-value"
-            value={this.state.term.name}
+            name="name"
+            value={this.state.term.name || ''}
+            onChange={this.handleInputChange} />
+          <input
+            placeholder="Post ID"
+            className="form-control add-list-item-value"
+            name="postID"
+            value={this.state.term.postID || ''}
             onChange={this.handleInputChange} />
           <button
             className="add-list-item-button"
