@@ -125,7 +125,7 @@ class Reactjs_List_Voter {
 		/**
 		 * The class responsible for making sure external plugins are installed
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/tgm/tgm.php';;
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'tgm/tgm.php';;
 
 		$this->loader = new Reactjs_List_Voter_Loader();
 
