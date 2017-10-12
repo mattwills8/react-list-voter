@@ -10,6 +10,7 @@ import { increaseVote, decreaseVote } from '../actions';
 //components
 import ListItems from '../components/ListItems';
 import AddListItemForm from '../components/AddListItemForm';
+import ListMeta from '../components/ListMeta';
 
 //helpers
 import { getListObjectBySelectedListId } from '../helpers/functions_list';
@@ -42,6 +43,7 @@ class List extends Component {
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
         />
+        <ListMeta />
       </div>
     );
   }

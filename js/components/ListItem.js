@@ -58,6 +58,24 @@ export default class ListItem extends Component {
             onClick={this.props.removeListItem}
             onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
         </div>
+        <div
+          className="col-10">
+          <div
+            className="row">
+            <div
+              className="col-6">
+              <h5>Post Slug:</h5>
+            </div>
+            <div
+              className="col-6">
+              <h6>[the-list-post-slug]</h6>
+            </div>
+          </div>
+          <div
+            className="row">
+            <p>Content will go here</p>
+          </div>
+        </div>
       </div>
     );
 
