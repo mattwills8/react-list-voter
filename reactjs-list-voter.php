@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'REACTJS_LIST_VOTER_VERSION', '1.0.0' );
 define( 'REACTJS_LIST_VOTER_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
-define( 'REACTJS_LIST_VOTER_BUILD_DIR', plugin_dir_path( __FILE__ ) . 'build/' );
+define( 'REACTJS_LIST_VOTER_BUILD_DIR', plugin_dir_url( __FILE__ ) . 'build/' );
 
 /**
  * The code that runs during plugin activation.

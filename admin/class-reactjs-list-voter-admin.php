@@ -86,7 +86,7 @@ class Reactjs_List_Voter_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, REACTJS_LIST_VOTER_BUILD_DIR . 'main.bundle.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, REACTJS_LIST_VOTER_BUILD_DIR . 'vendor/font-awesome-4.7.0/css/font-awesome.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name.'font-awesome-4.7.0', REACTJS_LIST_VOTER_BUILD_DIR . 'vendor/font-awesome-4.7.0/css/font-awesome.min.css', array(), $this->version, 'all' );
 
 	}
 	/**
