@@ -32,13 +32,13 @@ class Reactjs_List_Voter_Activator {
 	public static function activate() {
 
 		add_action( 'init', array('this','cptui_register_my_cpts_list_voter_list_item') );
+		add_action( 'init', array('this','list_voter_list_item_post_type_rest_support'), 25 );
 	}
 
+	/**
+	 * Register Post Type: List Voter List Items.
+	 */
 	public function cptui_register_my_cpts_list_voter_list_item() {
-
-		/**
-		 * Post Type: List Voter List Items.
-		 */
 
 		$labels = array(
 			"name" => __( "List Voter List Items", "storefront" ),
@@ -67,5 +67,21 @@ class Reactjs_List_Voter_Activator {
 
 		register_post_type( "list_voter_list_item", $args );
 	}
+	
+
+	/**
+  * Add REST API support to an already registered post type.
+  */
+  public function list_voter_list_item_post_type_rest_support() {
+  	global $wp_post_types;
+
+  	$post_type_name = 'list_voter_list_item';
+  	if( isset( $wp_post_types[ $post_type_name ] ) ) {
+  		$wp_post_types[$post_type_name]->show_in_rest = true;
+  		$wp_post_types[$post_type_name]->rest_base = $post_type_name;
+  		$wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
+  	}
+
+  }
 
 }
