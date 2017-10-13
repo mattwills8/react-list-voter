@@ -43,12 +43,12 @@ export default class AddListItemButton extends Component {
         <form
           className="input-group add-list-item-form"
           onSubmit={this.handleSubmit}>
-          <input
+          /*<input
             placeholder="Item Name"
             className="form-control add-list-item-value"
             name="name"
             value={this.state.term.name || ''}
-            onChange={this.handleInputChange} />
+            onChange={this.handleInputChange} />*/
           <input
             placeholder="Post ID"
             className="form-control add-list-item-value"
