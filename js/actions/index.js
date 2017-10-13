@@ -46,13 +46,15 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   let request = new wpRequest;
   let posts = request.allPosts();
 
+  console.log(posts);
+
   return {
     type: BULK_ADD_LIST_ITEM,
-    payload: {
+    payload: posts,
+    meta: {
       listOfLists: listOfLists,
       selectedListId: selectedListId,
-      valuesToAdd: valuesToAdd,
-      posts:posts
+      valuesToAdd: valuesToAdd
     }
   };
 }
@@ -61,8 +63,6 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
 
   let request = new wpRequest;
   let postToAdd = request.postById( valueToAdd.postID );
-
-  console.log(valueToAdd);
 
   return {
     type: ADD_LIST_ITEM,
