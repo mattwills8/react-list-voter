@@ -10,6 +10,7 @@
   "author": "Matt Wills",
   "license": "GPL-2.0",
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "^4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
@@ -17,7 +18,7 @@
     "react-dom": "^15.0.0",
     "react-file-reader": "^1.1.2",
     "react-flip-move": "^2.9.15",
-    "redux-promise": "^0.5.3"
+    "redux-promise-middleware": "^4.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxPromise from 'redux-promise-middleware';
+import { createStore, applyMiddleware, compose } from 'redux';
+import promiseMiddleware from 'redux-promise-middleware';
 
 import reducers from '../reducers';
 
 import List from '../containers/List';
 import ListSelector from '../containers/ListSelector';
 
-const store = createStore(reducers, /* preloadedState,*/
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(
-    ReduxPromise()
-  )
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(
+      promiseMiddleware()
+    )
+));
 
 class App extends React.Component {
   render() {

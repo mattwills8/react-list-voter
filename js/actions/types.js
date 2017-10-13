@@ -16,4 +16,4 @@ export {
   REMOVE_LIST_ITEM,
   INCREASE_VOTE,
   DECREASE_VOTE
-}
+};

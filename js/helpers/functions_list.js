@@ -1,7 +1,6 @@
 import { toJS, fromJS, List, sort } from 'immutable';
 
 
-
 export function addListItems(listOfLists, selectedListId, listItemsValuesArray) {
 
   let theList = getListBySelectedListId(listOfLists, selectedListId);

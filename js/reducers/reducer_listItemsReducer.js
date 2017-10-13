@@ -1,4 +1,5 @@
 import { toJS, fromJS, List, sort } from 'immutable';
+import { PENDING, FULFILLED, REJECTED } from 'redux-promise-middleware';
 
 import {
   updateListOfLists,
@@ -56,12 +57,28 @@ export default function(state=listOfLists, action) {
 
     case BULK_ADD_LIST_ITEM:
 
+      action.payload.posts.then(function(result){
+
+        action.payload.valuesToAdd.forEach( valueToAdd => {
+          let postToAdd = result.filter(function( post ) {
+            return post.id === valueToAdd.postID;
+          })[0];
+
+          valueToAdd.postContent = postToAdd || null;
+        });
+      });
+
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
 
-    case ADD_LIST_ITEM:
+    case `${ADD_LIST_ITEM}_FULFILLED`:
 
-      return addListItems(action.payload.listOfLists, action.payload.selectedListId,[action.payload.valueToAdd])
+      console.log('value to add: ');
+      console.log(action);
+
+      action.meta.valueToAdd.postContent = action.payload.data || null;
+
+      return addListItems(action.meta.listOfLists, action.meta.selectedListId,[action.meta.valueToAdd]);
 
 
     case REMOVE_LIST_ITEM:

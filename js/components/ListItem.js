@@ -73,7 +73,9 @@ export default class ListItem extends Component {
           </div>
           <div
             className="row">
-            <p>Post Content will go here</p>
+            <div
+              dangerouslySetInnerHTML={{__html: this.props.item.values.postContent.content.rendered}} >
+            </div>
           </div>
         </div>
       </div>

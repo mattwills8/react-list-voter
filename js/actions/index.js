@@ -1,3 +1,5 @@
+import { wpRequest } from '../helpers/functions_requests';
+
 import {
   SELECT_LIST,
   ADD_LIST,
@@ -40,22 +42,32 @@ export function removeList(listOfLists, listId) {
 }
 
 export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
+
+  let request = new wpRequest;
+  let posts = request.allPosts();
+
   return {
     type: BULK_ADD_LIST_ITEM,
     payload: {
       listOfLists: listOfLists,
       selectedListId: selectedListId,
-      valuesToAdd: valuesToAdd
+      valuesToAdd: valuesToAdd,
+      posts:posts
     }
   };
 }
 
 export function addListItem(listOfLists, selectedListId, valueToAdd) {
-  //this is an action creator and needs to return an action
-  // ie an object with a type (and payload) property
+
+  let request = new wpRequest;
+  let postToAdd = request.postById( valueToAdd.postID );
+
+  console.log(valueToAdd);
+
   return {
     type: ADD_LIST_ITEM,
-    payload: {
+    payload: postToAdd,
+    meta: {
       listOfLists: listOfLists,
       selectedListId: selectedListId,
       valueToAdd: valueToAdd
