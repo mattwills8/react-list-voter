@@ -41,8 +41,11 @@ export default class ListItem extends Component {
             <div className="col-1 votes-wrapper">
               {this.props.item.votes}
             </div>
-            <div className="col-9">
+            <div className="col-7">
               {this.props.item.values.postContent.title.rendered}
+            </div>
+            <div className="col-2 list-featured-image">
+              <img src={this.props.item.values.postContent['wp:featuredmedia'][0].href} />
             </div>
             <div
                 className="col-1 vote-button vote-down"
