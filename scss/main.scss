@@ -18,6 +18,16 @@
       border-radius: 5px;
       text-align: center;
       list-style: none;
+
+      .list-featured-image {
+        height: 65px;
+        width: 65px;
+
+        img {
+          max-height: 100%;
+          object-position: 50% 50%;
+        }
+      }
     }
   }
 }
