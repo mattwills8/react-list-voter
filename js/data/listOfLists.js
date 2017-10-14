@@ -12,12 +12,14 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
           }
         },
         votes:5
@@ -32,12 +34,14 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
           }
         },
         votes:5
@@ -52,12 +56,14 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
           }
         },
         votes:5
@@ -72,12 +78,14 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
           }
         },
         votes:5
@@ -96,13 +104,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -116,13 +131,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -136,13 +158,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -156,13 +185,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -180,13 +216,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:1
       },
@@ -200,13 +243,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -220,13 +270,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:3
       },
@@ -240,13 +297,20 @@ var listOfLists = [
             content: {
               rendered: 'Content Placeholder'
             },
-            "wp:featuredmedia" : [
-                {
-                    "embeddable": true,
-                    "href": ""
-                }
-            ],
-          }
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:2
       },
