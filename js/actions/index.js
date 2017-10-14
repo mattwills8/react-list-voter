@@ -8,7 +8,8 @@ import {
   ADD_LIST_ITEM,
   REMOVE_LIST_ITEM,
   INCREASE_VOTE,
-  DECREASE_VOTE
+  DECREASE_VOTE,
+  GET_LIST_MEDIA
 } from './types.js';
 
 
@@ -44,7 +45,7 @@ export function removeList(listOfLists, listId) {
 export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 
   let request = new wpRequest;
-  let posts = request.allPosts();
+  let posts = request.listItemPosts();
 
   console.log(posts);
 
@@ -62,16 +63,28 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 export function addListItem(listOfLists, selectedListId, valueToAdd) {
 
   let request = new wpRequest;
-  let postToAdd = request.postById( valueToAdd.postID );
+  let postToAdd = request.listItemPostsById( valueToAdd.postID );
 
-  return {
-    type: ADD_LIST_ITEM,
-    payload: postToAdd,
-    meta: {
-      listOfLists: listOfLists,
-      selectedListId: selectedListId,
-      valueToAdd: valueToAdd
-    }
+  //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
+  let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
+
+  return dispatch => {
+    postToAdd.then((post) => {
+
+      let mediaRequest = request.getUrl(`${mediaRoot}${post.data["featured_media"]}`);
+
+      valueToAdd.postContent = post.data;
+
+      dispatch({
+        type: ADD_LIST_ITEM,
+        payload: mediaRequest,
+        meta: {
+          listOfLists: listOfLists,
+          selectedListId: selectedListId,
+          valueToAdd: valueToAdd,
+        }
+      });
+    })
   };
 }
 
@@ -105,5 +118,12 @@ export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
       selectedListId: selectedListId,
       targetListItemId: targetListItemId
     }
+  }
+}
+
+export function getListMedia( getURL ) {
+  return {
+    type: GET_LIST_MEDIA,
+
   }
 }

@@ -20,7 +20,12 @@ var listOfLists = [
                   }
               ],
             }
-          }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -42,7 +47,12 @@ var listOfLists = [
                   }
               ],
             }
-          }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -64,7 +74,12 @@ var listOfLists = [
                   }
               ],
             }
-          }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
@@ -86,7 +101,12 @@ var listOfLists = [
                   }
               ],
             }
-          }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
         },
         votes:5
       },
