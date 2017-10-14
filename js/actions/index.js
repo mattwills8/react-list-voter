@@ -47,7 +47,52 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   let request = new wpRequest;
   let posts = request.listItemPosts();
 
-  console.log(posts);
+  //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
+  let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
+
+  return dispatch => {
+    posts.then((response) => {
+
+      let posts = response.data;
+      let postMediaLinks = [];
+
+      //assigns post object to each value to add
+      valuesToAdd.forEach( valueToAdd => {
+        let postToAdd = posts.filter(function( post ) {
+          return post.id == valueToAdd.postID;
+        })[0];
+
+        valueToAdd.postContent = postToAdd || null;
+      });
+
+      //gets media link for each value to add
+      var itemsProcessed = 0;
+      valuesToAdd.forEach( valueToAdd => {
+
+        request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
+          .then((mediaResponse) => {
+            valueToAdd.postMedia = {
+              postImage: {
+                src: mediaResponse.data.guid.rendered
+              }
+            };
+
+            //when all api requests have been processed, dispatch the action creator
+            itemsProcessed++;
+            if(itemsProcessed === valuesToAdd.length) {
+              dispatch({
+                type: BULK_ADD_LIST_ITEM,
+                payload: {
+                  listOfLists: listOfLists,
+                  selectedListId: selectedListId,
+                  valuesToAdd: valuesToAdd,
+                }
+              });
+            }
+          });
+      });
+    })
+  };
 
   return {
     type: BULK_ADD_LIST_ITEM,

@@ -55,22 +55,11 @@ export default function(state=listOfLists, action) {
       return newListOfLists.delete(indexOfListToRemove).toJS();
 
 
-    case `${BULK_ADD_LIST_ITEM}_FULFILLED`:
+    case BULK_ADD_LIST_ITEM:
 
-      let result = action.payload.data;
+      console.log(action.payload.valuesToAdd);
 
-      console.log('action');
-      console.log(action);
-
-      action.meta.valuesToAdd.forEach( valueToAdd => {
-        let postToAdd = result.filter(function( post ) {
-          return post.id == valueToAdd.postID;
-        })[0];
-
-        valueToAdd.postContent = postToAdd || null;
-      });
-
-      return addListItems(action.meta.listOfLists, action.meta.selectedListId,action.meta.valuesToAdd);
+      return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
 
     case `${ADD_LIST_ITEM}_FULFILLED`:
