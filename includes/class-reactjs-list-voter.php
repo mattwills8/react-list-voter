@@ -78,6 +78,7 @@ class Reactjs_List_Voter {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_post_types();
 
 	}
 
@@ -127,6 +128,12 @@ class Reactjs_List_Voter {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/tgm/tgm.php';
 
+		/**
+		 * The class responsible for adding custom post types
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/post-types/post-types.php';
+
+
 		$this->loader = new Reactjs_List_Voter_Loader();
 
 	}
@@ -162,7 +169,6 @@ class Reactjs_List_Voter {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'plugin_menu' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 	}
 
 	/**
@@ -178,7 +184,14 @@ class Reactjs_List_Voter {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+	}
 
+	private function define_post_types() {
+
+		$post_types = new Reactjs_List_Voter_Post_Types();
+
+		$this->loader->add_action( 'init' , $post_types, 'cptui_register_my_cpts_list_voter_list_item');
+		$this->loader->add_action( 'init' , $post_types, 'list_voter_list_item_post_type_rest_support', 25);
 	}
 
 	/**
