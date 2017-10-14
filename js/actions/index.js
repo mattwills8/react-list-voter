@@ -93,16 +93,6 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
       });
     })
   };
-
-  return {
-    type: BULK_ADD_LIST_ITEM,
-    payload: posts,
-    meta: {
-      listOfLists: listOfLists,
-      selectedListId: selectedListId,
-      valuesToAdd: valuesToAdd
-    }
-  };
 }
 
 export function addListItem(listOfLists, selectedListId, valueToAdd) {

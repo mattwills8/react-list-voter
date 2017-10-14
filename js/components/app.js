@@ -18,16 +18,47 @@ const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
     )
 ));
 
+const dataDomain = document.getElementById('app').dataset.domain;
+
+console.log(dataDomain);
+
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.renderApp = this.renderApp.bind(this);
+  }
+
+  renderApp() {
+    if(this.props.dataDomain !== 'admin') {
+      return (
+        <div className="row">
+          <div className="col-12 list-editor">
+            <List
+              dataDomain={this.props.dataDomain} />
+          </div>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="row">
+          <div className="col-4 list-selector">
+            <ListSelector />
+          </div>
+          <div className="col-8 list-editor">
+            <List />
+          </div>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
-      <div className="row">
-        <div className="col-4 list-selector">
-          <ListSelector />
-        </div>
-        <div className="col-8 list-editor">
-          <List />
-        </div>
+      <div>
+        {this.renderApp()}
       </div>
     );
   }
@@ -35,7 +66,8 @@ class App extends React.Component {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App
+      dataDomain={dataDomain} />
   </Provider>
   , document.querySelector('#app')
 );

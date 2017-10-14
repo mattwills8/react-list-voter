@@ -14,6 +14,6 @@
 
 ?>
 
-<div id="app" class="container">
+<div id="app" data-domain="admin" class="container">
   <script type="text/javascript" src="<?php echo  REACTJS_LIST_VOTER_BUILD_DIR . 'app.bundle.js'; ?>" charset="utf-8"></script>
 </div>
