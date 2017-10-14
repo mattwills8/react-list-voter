@@ -57,7 +57,7 @@ export default class ListItem extends Component {
         <div
           className="col-2">
           <RemoveButton
-            btnContent="Remove"
+            btnContent="X"
             onClick={this.props.removeListItem}
             onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
         </div>
