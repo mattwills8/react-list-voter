@@ -64,7 +64,6 @@ class Reactjs_List_Voter_Post_Types {
   	if( isset( $wp_post_types[ $post_type_name ] ) ) {
   		$wp_post_types[$post_type_name]->show_in_rest = true;
   		$wp_post_types[$post_type_name]->rest_base = $post_type_name;
-  		$wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
   	}
 
   }
