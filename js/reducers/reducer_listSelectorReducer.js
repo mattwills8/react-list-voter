@@ -10,7 +10,12 @@ import {
   SELECT_LIST
 } from '../actions/types.js';
 
-export default function(state=0, action) {
+const dataDomain = document.getElementById('app').dataset.domain;
+
+//convert to integer if not admin
+var initialState = dataDomain === 'admin' ? 0 : parseInt(dataDomain);
+
+export default function(state=initialState, action) {
 
   switch(action.type) {
     case SELECT_LIST:

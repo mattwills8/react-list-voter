@@ -18,6 +18,7 @@ import { getListObjectBySelectedListId } from '../helpers/functions_list';
 
 class List extends Component {
 
+
   render() {
 
     var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
