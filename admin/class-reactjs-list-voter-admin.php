@@ -109,7 +109,6 @@ class Reactjs_List_Voter_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, REACTJS_LIST_VOTER_BUILD_DIR . 'vendor/papaparse.min.js', array( 'jquery' ), $this->version, false );
-
 	}
 
 }

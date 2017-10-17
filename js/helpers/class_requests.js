@@ -15,6 +15,11 @@ export class wpRequest {
   *
   */
 
+  getLists() {
+
+    return this.getUrl( `${this.ROOT_URL}list_voter_rest_server/lists` );
+  }
+
   getListItemPostsById( id ) {
 
     return this.getCustomPostsById( 'list_voter_list_item', id );

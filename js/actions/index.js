@@ -1,6 +1,7 @@
 import { wpRequest } from '../helpers/class_requests';
 
 import {
+  INIT,
   SELECT_LIST,
   ADD_LIST,
   REMOVE_LIST,
@@ -11,6 +12,37 @@ import {
   DECREASE_VOTE,
   GET_LIST_MEDIA
 } from './types.js';
+
+
+export function init() {
+
+  let initRequest = new wpRequest();
+
+  let lists = initRequest.getLists();
+
+  return dispatch => {
+    lists.then((response) => {
+
+      let lists = response.data;
+
+      let listOfLists = lists.map( list => {
+        return { name: list.name, id: list.term_id };
+      });
+
+      var listItems = initRequest.getListItemPosts();
+
+      dispatch({
+        type: INIT,
+        payload: listItems,
+        meta: {
+          lists: listOfLists
+        }
+      });
+
+
+    }
+  )}
+}
 
 
 export function selectList(selectedListId) {

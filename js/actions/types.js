@@ -1,3 +1,4 @@
+const INIT = 'INIT';
 const SELECT_LIST = 'SELECT_LIST';
 const ADD_LIST = 'ADD_LIST';
 const REMOVE_LIST = 'REMOVE_LIST';
@@ -9,6 +10,7 @@ const DECREASE_VOTE = 'DECREASE_VOTE';
 const GET_LIST_MEDIA = 'GET_LIST_MEDIA';
 
 export {
+  INIT,
   SELECT_LIST,
   ADD_LIST,
   REMOVE_LIST,

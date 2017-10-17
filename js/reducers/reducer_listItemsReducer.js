@@ -12,6 +12,7 @@ import {
 } from '../helpers/functions_list';
 
 import {
+    INIT,
     ADD_LIST,
     REMOVE_LIST,
     BULK_ADD_LIST_ITEM,
@@ -30,6 +31,63 @@ import listOfLists from '../data/listOfLists.js';
 export default function(state=listOfLists, action) {
 
   switch(action.type) {
+
+    case `${INIT}_FULFILLED`:
+
+      var lists = action.meta.lists;
+      var listItems = action.payload.data;
+
+
+
+      /*var finalListOfLists = listItems.map( listItem => {
+
+        listItem.acf.included_in_lists.split(",").forEach( inList => {
+
+          lists.reduce( list => {
+            if( inList == list.id ){
+
+            }
+          });
+        })
+      });*/
+
+      var finalListOfLists = lists.map( list => {
+
+        list.list = listItems.reduce( (listItemsInList, listItem) => {
+
+          if(listItem.acf.included_in_lists.split(",").includes(String(list.id))){
+
+            let finalListItem = {
+              id: listItem.id,
+              values: {
+                postID: listItem.id,
+                postContent: {
+                  title: listItem.title,
+                  content: listItem.content,
+                  "_links": listItem["wp:featuredmedia"]
+                },
+                postMedia: {
+                  postImage: {
+                    src: "",
+                  },
+                },
+              },
+              votes: listItem.acf.list_voter_votes
+            };
+
+            listItemsInList.push(finalListItem);
+          }
+
+          return listItemsInList;
+        }, []);
+
+        return list
+      })
+
+      return finalListOfLists;
+
+
+
 
     case ADD_LIST:
 

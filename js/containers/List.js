@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //action creators
-import { bulkAddListItems, addListItem, removeListItem } from '../actions';
-import { increaseVote, decreaseVote } from '../actions';
+
+import {
+  init,
+  bulkAddListItems,
+  addListItem,
+  removeListItem,
+  increaseVote,
+  decreaseVote
+} from '../actions';
 
 //components
 import ListItems from '../components/ListItems';
@@ -19,6 +26,9 @@ import { getListObjectBySelectedListId } from '../helpers/functions_list';
 class List extends Component {
   constructor(props){
     super(props);
+
+    //get initial state
+    this.props.init();
 
     this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
   }
@@ -39,6 +49,12 @@ class List extends Component {
 
 
   render() {
+
+    if(this.props.listOfLists.filter( list => {return list.id === this.props.selectedListId}).length === 0){
+      return (
+        <h1>Select List To Edit</h1>
+      );
+    }
 
     var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
 
@@ -79,6 +95,7 @@ function mapDispatchToProps(dispatch) {
   //anything returned from this function will end up as props on List
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
+      init: init,
       bulkAddListItems: bulkAddListItems,
       addListItem   : addListItem,
       removeListItem: removeListItem,
