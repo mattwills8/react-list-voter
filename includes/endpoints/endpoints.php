@@ -16,6 +16,14 @@ class List_Voter_REST_Server extends WP_REST_Controller {
         )
     ));
 
+    $base      = 'in-lists';
+    register_rest_route( $namespace, '/' . $base, array(
+      array(
+          'methods'         => WP_REST_Server::EDITABLE,
+          'callback'        => array( $this, 'change_in_lists' ),
+        )
+    ));
+
     $base      = 'lists';
     register_rest_route( $namespace, '/' . $base, array(
       array(
@@ -31,6 +39,20 @@ class List_Voter_REST_Server extends WP_REST_Controller {
     $id = $request->get_header( 'post_id' );
 
     if (  update_field( 'list_voter_votes', $new_votes, $id) ){
+      return get_post( $id );
+    }
+
+    return false;
+
+
+  }
+
+  public function change_in_lists( WP_REST_Request $request ){
+
+    $new_in_lists = $request->get_header( 'in_lists' );
+    $id = $request->get_header( 'post_id' );
+
+    if (  update_field( 'included_in_lists', $new_in_lists, $id) ){
       return get_post( $id );
     }
 
