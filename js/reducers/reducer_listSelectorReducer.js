@@ -10,10 +10,11 @@ import {
   SELECT_LIST
 } from '../actions/types.js';
 
-const dataDomain = document.getElementById('app').dataset.domain;
 
+const dataDomain = document.getElementById('app').dataset.domain;
 //convert to integer if not admin
 var initialState = dataDomain === 'admin' ? 0 : parseInt(dataDomain);
+
 
 export default function(state=initialState, action) {
 

@@ -17,6 +17,25 @@ import { getListObjectBySelectedListId } from '../helpers/functions_list';
 
 
 class List extends Component {
+  constructor(props){
+    super(props);
+
+    this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
+  }
+
+  renderAddListItemForm() {
+
+    if(this.props.isAdmin){
+      return (
+        <AddListItemForm
+          listOfLists={this.props.listOfLists}
+          selectedListId={this.props.selectedListId}
+          bulkAddListItems={this.props.bulkAddListItems}
+          addListItem={this.props.addListItem}
+        />
+      );
+    }
+  }
 
 
   render() {
@@ -25,20 +44,16 @@ class List extends Component {
 
     return (
       <div>
-        <AddListItemForm
-            listOfLists={this.props.listOfLists}
-            selectedListId={this.props.selectedListId}
-            bulkAddListItems={this.props.bulkAddListItems}
-            addListItem={this.props.addListItem}
-          />
+        {this.renderAddListItemForm()}
         <div
           className="row">
           <h2 className="col-12 text-center">
-            Selected List: {currentListName}
+            {currentListName}
           </h2>
         </div>
         <ListItems
           listOfLists={this.props.listOfLists}
+          isAdmin={this.props.isAdmin}
           selectedListId={this.props.selectedListId}
           removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}

@@ -14,6 +14,8 @@ export default class ListItem extends Component {
 
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
+    this.renderRemoveButton = this.renderRemoveButton.bind(this);
+    this.renderPostAdminMeta =this.renderPostAdminMeta.bind(this);
   }
 
   increaseVote() {
@@ -24,13 +26,47 @@ export default class ListItem extends Component {
     this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
   }
 
+  renderRemoveButton() {
+    if(this.props.isAdmin){
+      return (
+        <div
+          className="col-2">
+          <RemoveButton
+            btnContent="X"
+            onClick={this.props.removeListItem}
+            onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
+        </div>
+      );
+    }
+  }
+
+  renderPostAdminMeta() {
+    if(this.props.isAdmin){
+      return (
+        <div
+          className="row">
+          <div
+            className="col-6">
+            <h5>Post ID:</h5>
+          </div>
+          <div
+            className="col-6">
+            <h6>{this.props.item.values.postID}</h6>
+          </div>
+        </div>
+      );
+    }
+  }
+
   render() {
+
+    var mainWidth = this.props.isAdmin ? 'col-10' : 'col-12';
 
     return (
 
       <div className="row">
         <li
-          className="col-10 list-item">
+          className={`${mainWidth} list-item`}>
           <div
             className="row">
             <div
@@ -54,26 +90,10 @@ export default class ListItem extends Component {
             </div>
           </div>
         </li>
+        {this.renderRemoveButton()}
         <div
-          className="col-2">
-          <RemoveButton
-            btnContent="X"
-            onClick={this.props.removeListItem}
-            onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
-        </div>
-        <div
-          className="col-10">
-          <div
-            className="row">
-            <div
-              className="col-6">
-              <h5>Post ID:</h5>
-            </div>
-            <div
-              className="col-6">
-              <h6>{this.props.item.values.postID}</h6>
-            </div>
-          </div>
+          className={mainWidth}>
+          {this.renderPostAdminMeta()}
           <div
             className="row">
             <div

@@ -1,4 +1,4 @@
-import { wpRequest } from '../helpers/functions_requests';
+import { wpRequest } from '../helpers/class_requests';
 
 import {
   SELECT_LIST,

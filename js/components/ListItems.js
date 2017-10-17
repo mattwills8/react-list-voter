@@ -28,6 +28,7 @@ export default class ListItems extends Component {
           index={i}
           item={item}
           listOfLists={this.props.listOfLists}
+          isAdmin={this.props.isAdmin}
           selectedListId={this.props.selectedListId}
           removeListItem={this.props.removeListItem}
           increaseVote={this.props.increaseVote}

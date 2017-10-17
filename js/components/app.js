@@ -32,10 +32,12 @@ class App extends React.Component {
       return (
         <div className="row">
           <div className="col-4 list-selector">
-            <ListSelector />
+            <ListSelector
+              isAdmin={true}/>
           </div>
           <div className="col-8 list-editor">
-            <List />
+            <List
+              isAdmin={true}/>
           </div>
         </div>
       );
@@ -45,6 +47,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-12 list-editor">
             <List
+              isAdmin={false}
               dataDomain={this.props.dataDomain} />
           </div>
         </div>
