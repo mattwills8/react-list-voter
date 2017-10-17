@@ -79,6 +79,7 @@ class Reactjs_List_Voter {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_post_types();
+		$this->define_custom_fields();
 
 	}
 
@@ -132,6 +133,11 @@ class Reactjs_List_Voter {
 		 * The class responsible for adding custom post types
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/post-types/post-types.php';
+
+		/**
+		 * The class responsible for adding custom fields
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-fields/acf.php';
 
 
 		$this->loader = new Reactjs_List_Voter_Loader();
@@ -192,6 +198,13 @@ class Reactjs_List_Voter {
 
 		$this->loader->add_action( 'init' , $post_types, 'cptui_register_my_cpts_list_voter_list_item');
 		$this->loader->add_action( 'init' , $post_types, 'list_voter_list_item_post_type_rest_support', 25);
+	}
+
+	private function define_custom_fields() {
+
+		$custom_fields = new Reactjs_List_Voter_Custom_Fields();
+
+		$this->loader->add_action( 'init' , $custom_fields, 'add_field_group', 20);
 	}
 
 	/**
