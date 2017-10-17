@@ -19,7 +19,7 @@ class List_Voter_REST_Server extends WP_REST_Controller {
     $base      = 'lists';
     register_rest_route( $namespace, '/' . $base, array(
       array(
-          'methods'         => WP_REST_Server::EDITABLE,
+          'methods'         => WP_REST_Server::READABLE,
           'callback'        => array( $this, 'get_lists' ),
         )
     ));
