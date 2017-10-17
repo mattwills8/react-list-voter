@@ -79,52 +79,6 @@ class Reactjs_List_Voter_Custom_Fields {
 
    }
 
-
-  /**
-   * Add the votes field to REST API responses for posts read and write
-   */
-  public function slug_register_list_voter_votes() {
-
-      register_rest_field( 'list_voter_list_item',
-          'list_voter_votes',
-          array(
-              'get_callback'    => array('this','slug_get_list_voter_meta'),
-              'update_callback' => array('this','slug_update_list_voter_meta'),
-              'schema'          => null,
-          )
-      );
-  }
-
-  /**
-   * Add the in_list field to REST API responses for posts read and write
-   */
-  public function slug_register_included_in_list() {
-
-      register_rest_field( 'list_voter_list_item',
-          'included_in_lists',
-          array(
-              'get_callback'    => array('this','slug_get_list_voter_meta'),
-              'update_callback' => array('this','slug_update_list_voter_meta'),
-              'schema'          => null,
-          )
-      );
-  }
-
-  public function slug_get_list_voter_meta( $object, $field_name, $request ) {
-      return get_post_meta( $object[ 'id' ], $field_name );
-  }
-
-  public function slug_update_list_voter_meta( $value, $object, $field_name ) {
-      if ( ! $value || ! is_string( $value ) ) {
-          return;
-      }
-
-      return update_post_meta( $object->ID, $field_name, strip_tags( $value ) );
-
-  }
-
-
-
 }
 
 ?>

@@ -11,7 +11,7 @@
 
 /**
  *
- * This class defines all code necessary to run during the plugin's activation.
+ * This class defines all custom post types
  *
  * @since      1.0.0
  * @package    Reactjs_List_Voter
@@ -33,7 +33,7 @@ class Reactjs_List_Voter_Post_Types {
 		$args = array(
 			"label" => __( "List Voter List Items", "storefront" ),
 			"labels" => $labels,
-			"description" => "",
+			"description" => "List Voter List Items",
 			"public" => true,
 			"publicly_queryable" => true,
 			"show_ui" => true,

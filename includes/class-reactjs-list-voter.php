@@ -80,6 +80,7 @@ class Reactjs_List_Voter {
 		$this->define_public_hooks();
 		$this->define_post_types();
 		$this->define_custom_fields();
+		$this->define_custom_endpoints();
 
 	}
 
@@ -138,6 +139,11 @@ class Reactjs_List_Voter {
 		 * The class responsible for adding custom fields
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-fields/acf.php';
+
+		/**
+		 * The class responsible for adding custom endpoints
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/endpoints/endpoints.php';
 
 
 		$this->loader = new Reactjs_List_Voter_Loader();
@@ -205,8 +211,13 @@ class Reactjs_List_Voter {
 		$custom_fields = new Reactjs_List_Voter_Custom_Fields();
 
 		$this->loader->add_action( 'init' , $custom_fields, 'add_field_group', 20);
-		$this->loader->add_action( 'rest_api_init', $custom_fields, 'slug_register_list_voter_votes' );
-		$this->loader->add_action( 'rest_api_init', $custom_fields, 'slug_register_included_in_list' );
+	}
+
+	private function define_custom_endpoints() {
+
+		$custom_endpoints = new List_Voter_REST_Server ();
+
+		$this->loader->add_action( 'rest_api_init',  $custom_endpoints, 'register_routes' );
 	}
 
 	/**

@@ -18,6 +18,8 @@ const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
     )
 ));
 
+console.log(wp.api.models);
+
 const dataDomain = document.getElementById('app').dataset.domain;
 
 class App extends React.Component {
