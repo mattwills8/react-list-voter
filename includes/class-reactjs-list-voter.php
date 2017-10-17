@@ -205,6 +205,8 @@ class Reactjs_List_Voter {
 		$custom_fields = new Reactjs_List_Voter_Custom_Fields();
 
 		$this->loader->add_action( 'init' , $custom_fields, 'add_field_group', 20);
+		$this->loader->add_action( 'rest_api_init', $custom_fields, 'slug_register_list_voter_votes' );
+		$this->loader->add_action( 'rest_api_init', $custom_fields, 'slug_register_included_in_list' );
 	}
 
 	/**
