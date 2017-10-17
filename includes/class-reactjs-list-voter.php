@@ -81,6 +81,7 @@ class Reactjs_List_Voter {
 		$this->define_post_types();
 		$this->define_custom_fields();
 		$this->define_custom_endpoints();
+		$this->define_custom_tax();
 
 	}
 
@@ -144,6 +145,11 @@ class Reactjs_List_Voter {
 		 * The class responsible for adding custom endpoints
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/endpoints/endpoints.php';
+
+		/**
+		 * The class responsible for adding custom taxonomies
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-tax/custom-tax.php';
 
 
 		$this->loader = new Reactjs_List_Voter_Loader();
@@ -215,9 +221,16 @@ class Reactjs_List_Voter {
 
 	private function define_custom_endpoints() {
 
-		$custom_endpoints = new List_Voter_REST_Server ();
+		$custom_endpoints = new List_Voter_REST_Server();
 
 		$this->loader->add_action( 'rest_api_init',  $custom_endpoints, 'register_routes' );
+	}
+
+	private function define_custom_tax() {
+
+		$custom_tax = new Reactjs_List_Voter_Custom_Tax();
+
+		$this->loader->add_action( 'init',  $custom_tax, 'add_custom_tax' );
 	}
 
 	/**

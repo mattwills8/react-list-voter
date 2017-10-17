@@ -43,18 +43,6 @@ class Reactjs_List_Voter_Custom_Fields {
     				'max' => '',
     				'step' => '',
     			),
-    			array (
-    				'key' => 'field_59e55d5b2720f',
-    				'label' => 'Included In Lists',
-    				'name' => 'included_in_lists',
-    				'type' => 'text',
-    				'default_value' => '',
-    				'placeholder' => '',
-    				'prepend' => '',
-    				'append' => '',
-    				'formatting' => 'none',
-    				'maxlength' => '',
-    			),
     		),
     		'location' => array (
     			array (

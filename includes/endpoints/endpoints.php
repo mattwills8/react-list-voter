@@ -16,11 +16,11 @@ class List_Voter_REST_Server extends WP_REST_Controller {
         )
     ));
 
-    $base      = 'lists-in';
+    $base      = 'lists';
     register_rest_route( $namespace, '/' . $base, array(
       array(
           'methods'         => WP_REST_Server::EDITABLE,
-          'callback'        => array( $this, 'change_lists_in' ),
+          'callback'        => array( $this, 'get_lists' ),
         )
     ));
   }
@@ -39,18 +39,12 @@ class List_Voter_REST_Server extends WP_REST_Controller {
 
   }
 
-  public function change_lists_in( WP_REST_Request $request ){
+  public function get_lists( WP_REST_Request $request ){
 
-    $new_lists_in = $request->get_header( 'lists_in' );
-    $id = $request->get_header( 'post_id' );
 
-    //return get_field( 'included_in_lists', $id);
-
-    if (  update_field( 'included_in_lists', $new_lists_in, $id) ){
-      return get_post( $id );
-    }
-
-    return false;
+    return get_terms(array(
+      'taxonomy' => 'lists',
+    ));
 
 
   }
