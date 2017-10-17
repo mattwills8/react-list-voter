@@ -45,7 +45,7 @@ export function removeList(listOfLists, listId) {
 export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 
   let request = new wpRequest;
-  let posts = request.listItemPosts();
+  let posts = request.getListItemPosts();
 
   //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
@@ -98,7 +98,7 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 export function addListItem(listOfLists, selectedListId, valueToAdd) {
 
   let request = new wpRequest;
-  let postToAdd = request.listItemPostsById( valueToAdd.postID );
+  let postToAdd = request.getListItemPostsById( valueToAdd.postID );
 
   //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';

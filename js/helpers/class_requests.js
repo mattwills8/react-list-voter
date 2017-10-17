@@ -4,56 +4,103 @@ export class wpRequest {
   constructor() {
 
     //TODO: change this to root url for actual host
-    this.ROOT_URL = `http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/`;
+    this.ROOT_URL = `http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/`;
+    this.ROOT_URL_FOR_GET = `${this.ROOT_URL}wp/v2/`;
     //this.ROOT_URL = `${window.location.hostname}/index.php/wp-json/wp/v2/`;
   }
 
-  listItemPostsById( id ) {
+  /*
+  *
+  * GET functions
+  *
+  */
 
-    return this.customPostsById( 'list_voter_list_item', id );
+  getListItemPostsById( id ) {
+
+    return this.getCustomPostsById( 'list_voter_list_item', id );
   }
 
 
-  listItemPosts() {
+  getListItemPosts() {
 
-    return this.customPosts( 'list_voter_list_item' );
+    return this.getCustomPosts( 'list_voter_list_item' );
   }
 
 
-  customPostsById( customPostName, id ) {
+  getCustomPostsById( customPostName, id ) {
 
     return this.get( `${customPostName}/${id}` );
   }
 
 
-  customPosts( customPostName ) {
+  getCustomPosts( customPostName ) {
 
     return this.get( customPostName );
   }
 
 
-  postById( id ) {
+  getPostById( id ) {
 
     return this.get(`posts/${id}`);
   }
 
 
-  allPosts() {
+  getAllPosts() {
 
     return this.get('posts');
   }
 
 
   get( endpoint ) {
-    const url = `${this.ROOT_URL}${endpoint}`;
+    const url = `${this.ROOT_URL_FOR_GET}${endpoint}`;
 
     return axios.get(url);
   }
-  
+
 
   getUrl( url ) {
 
     return axios.get(url);
+  }
+
+
+  /*
+  *
+  * POST functions
+  *
+  */
+
+  postNewListsIn( postId, newListsIn ) {
+
+    var headersObj = {
+      lists_in: newListsIn,
+      post_id: postId
+    }
+
+    return this.post('list_voter_rest_server/lists-in/', headersObj);
+  }
+
+  postNewVotes( postId, newVotes ) {
+
+    var headersObj = {
+      votes: newVotes,
+      post_id: postId
+    }
+
+    return this.post('list_voter_rest_server/votes/', headersObj);
+  }
+
+  post( endpoint, headersObj ) {
+
+    var config = {
+      headers: headersObj
+    }
+
+    return axios.post(
+      `${this.ROOT_URL}${endpoint}`,
+      null,
+      config
+    )
   }
 
 
