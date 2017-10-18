@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import {
   init,
+  initPopulateLists,
   bulkAddListItems,
   addListItem,
   removeListItem,
@@ -28,7 +29,7 @@ class List extends Component {
     super(props);
 
     //get initial state
-    this.props.init();
+    this.props.initPopulateLists();
 
     this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
   }
@@ -50,6 +51,7 @@ class List extends Component {
 
   render() {
 
+    //Don't render a list on admin init
     if(this.props.listOfLists.filter( list => {return list.id === this.props.selectedListId}).length === 0){
       return (
         <h1>Select List To Edit</h1>
@@ -58,6 +60,7 @@ class List extends Component {
 
     var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
 
+    //main render
     return (
       <div>
         {this.renderAddListItemForm()}
@@ -95,7 +98,7 @@ function mapDispatchToProps(dispatch) {
   //anything returned from this function will end up as props on List
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
-      init: init,
+      initPopulateLists: initPopulateLists,
       bulkAddListItems: bulkAddListItems,
       addListItem   : addListItem,
       removeListItem: removeListItem,

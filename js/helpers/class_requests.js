@@ -4,9 +4,10 @@ export class wpRequest {
   constructor() {
 
     //TODO: change this to root url for actual host
+    //this.ROOT_URL = `${window.location.hostname}/index.php/wp-json/wp/v2/`;
     this.ROOT_URL = `http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/`;
     this.ROOT_URL_FOR_GET = `${this.ROOT_URL}wp/v2/`;
-    //this.ROOT_URL = `${window.location.hostname}/index.php/wp-json/wp/v2/`;
+    this.ROOT_URL_FOR_MEDIA = `${this.ROOT_URL}wp/v2/media/`;
   }
 
   /*

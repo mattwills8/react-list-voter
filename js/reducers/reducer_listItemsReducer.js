@@ -13,6 +13,9 @@ import {
 
 import {
     INIT,
+    INIT_GET_LISTS_SUCCESS,
+    INIT_GET_LIST_ITEMS_SUCCESS,
+    INIT_POPULATED_LISTS_SUCCESS,
     ADD_LIST,
     REMOVE_LIST,
     BULK_ADD_LIST_ITEM,
@@ -32,62 +35,10 @@ export default function(state=listOfLists, action) {
 
   switch(action.type) {
 
-    case `${INIT}_FULFILLED`:
+    case `INIT_POPULATED_LISTS_SUCCESS`:
 
-      var lists = action.meta.lists;
-      var listItems = action.payload.data;
-
-
-
-      /*var finalListOfLists = listItems.map( listItem => {
-
-        listItem.acf.included_in_lists.split(",").forEach( inList => {
-
-          lists.reduce( list => {
-            if( inList == list.id ){
-
-            }
-          });
-        })
-      });*/
-
-      var finalListOfLists = lists.map( list => {
-
-        list.list = listItems.reduce( (listItemsInList, listItem) => {
-
-          if(listItem.acf.included_in_lists.split(",").includes(String(list.id))){
-
-            let finalListItem = {
-              id: listItem.id,
-              values: {
-                postID: listItem.id,
-                postContent: {
-                  title: listItem.title,
-                  content: listItem.content,
-                  "_links": listItem["wp:featuredmedia"]
-                },
-                postMedia: {
-                  postImage: {
-                    src: "",
-                  },
-                },
-              },
-              votes: listItem.acf.list_voter_votes
-            };
-
-            listItemsInList.push(finalListItem);
-          }
-
-          return listItemsInList;
-        }, []);
-
-        return list
-      })
-
-      return finalListOfLists;
-
-
-
+      return action.payload;
+      
 
     case ADD_LIST:
 
