@@ -13,6 +13,7 @@ import {
 
 import {
     INIT,
+    INIT_FETCHED_MEDIA,
     INIT_GET_LISTS_SUCCESS,
     INIT_GET_LIST_ITEMS_SUCCESS,
     INIT_POPULATED_LISTS_SUCCESS,
@@ -35,10 +36,12 @@ export default function(state=listOfLists, action) {
 
   switch(action.type) {
 
-    case `INIT_POPULATED_LISTS_SUCCESS`:
-
+    case INIT_FETCHED_MEDIA:
       return action.payload;
-      
+
+    case INIT_POPULATED_LISTS_SUCCESS:
+      return action.payload;
+
 
     case ADD_LIST:
 

@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 
 import {
   init,
-  initPopulateLists,
   bulkAddListItems,
   addListItem,
   removeListItem,
@@ -29,7 +28,7 @@ class List extends Component {
     super(props);
 
     //get initial state
-    this.props.initPopulateLists();
+    this.props.init();
 
     this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
   }
@@ -98,7 +97,7 @@ function mapDispatchToProps(dispatch) {
   //anything returned from this function will end up as props on List
   //whenever addListItem is called, the result should be passed to all our reducers
   return bindActionCreators({
-      initPopulateLists: initPopulateLists,
+      init: init,
       bulkAddListItems: bulkAddListItems,
       addListItem   : addListItem,
       removeListItem: removeListItem,

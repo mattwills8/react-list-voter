@@ -2,6 +2,7 @@ import { wpRequest } from '../helpers/class_requests';
 
 import {
   INIT,
+  INIT_FETCHED_MEDIA,
   INIT_GET_LISTS_SUCCESS,
   INIT_GET_LIST_ITEMS_SUCCESS,
   INIT_POPULATED_LISTS_SUCCESS,
@@ -17,32 +18,56 @@ import {
 } from './types.js';
 
 
+/*
+*
+* START OF INIT SEQUENCE LOGIC
+*
+*/
+
 export function init() {
 
-  let initRequest = new wpRequest();
+  var initRequest = new wpRequest();
+  let mediaRoot = initRequest.ROOT_URL_FOR_MEDIA;
 
-  let lists = initRequest.getLists();
+  return (dispatch, getState) => {
 
-  return dispatch => {
-    lists.then((response) => {
+    return dispatch(initPopulateLists()).then( populatedLists => {
 
-      let lists = response.data;
+      var listOfLists = populatedLists;
 
-      let listOfLists = lists.map( list => {
-        return { name: list.name, id: list.term_id };
+      // set up array of promises
+      const mediaPromises = [];
+
+
+      // set media request promise for each list item
+      listOfLists.forEach( list => {
+        list.list.map( listItem => {
+
+          let mediaRequest = initRequest.getUrl(`${mediaRoot}${listItem.values.postContent["featured_media"]}`);
+          listItem.values.postMedia.tmp = mediaRequest;
+          mediaPromises.push(mediaRequest);
+        });
       });
 
-      var listItems = initRequest.getListItemPosts();
+      // set image src from promise response
+      Promise.all(mediaPromises).then( (response) => {
+        listOfLists.forEach( list => {
+          list.list.map( listItem => {
 
-      dispatch({
-        type: INIT,
-        payload: listItems,
-        meta: {
-          lists: listOfLists
-        }
+            // match correct list item image src from list of promises
+            listItem.values.postMedia.postImage.src = response.filter( fetchedMedia => {
+              return fetchedMedia.data.id === listItem.values.postContent["featured_media"];
+            })[0].data.guid.rendered;
+          })
+        });
+
+        dispatch({
+          type: INIT_FETCHED_MEDIA,
+          payload: listOfLists,
+        });
       });
-    }
-  )}
+    });
+  };
 }
 
 export function initPopulateLists() {
@@ -52,12 +77,12 @@ export function initPopulateLists() {
   return (dispatch, getState) => {
 
     // get lists
-    dispatch(initGetLists()).then(getListsResponse => {
+    return dispatch(initGetLists()).then(getListsResponse => {
 
       var lists = getListsResponse;
 
       // get list items
-      initRequest.getListItemPosts().then(getListItemsResponse => {
+      return initRequest.getListItemPosts().then(getListItemsResponse => {
 
         dispatch({
           type: INIT_GET_LIST_ITEMS_SUCCESS,
@@ -80,9 +105,11 @@ export function initPopulateLists() {
                   postContent: {
                     title: listItem.title,
                     content: listItem.content,
-                    "_links": listItem["wp:featuredmedia"]
+                    "featured_media": listItem["featured_media"],
+                    "_links": listItem["_links"],
                   },
                   postMedia: {
+                    tmp: "",
                     postImage: {
                       src: "",
                     },
@@ -104,6 +131,8 @@ export function initPopulateLists() {
           type: INIT_POPULATED_LISTS_SUCCESS,
           payload: populatedLists,
         });
+
+        return populatedLists;
       });
     });
 
@@ -135,33 +164,12 @@ export function initGetLists() {
   }
 }
 
-export function getListItemMedia( listItem ) {
 
-  //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
-  let request = new wpRequest()
-  let mediaRoot = request.ROOT_URL_FOR_MEDIA;
-
-  return dispatch => {
-
-      let mediaRequest = request.getUrl(`${mediaRoot}${listItem.values.postContent["_links"]["wp:featuredmedia"].href}`);
-
-      mediaRequest.then((response) => {
-
-        listItem.post.postMedia.postImage.src = response.data.guid.rendered;
-      });
-
-      return listItem;
-  }
-}
-
-export function getListsAndLogState() {
-
-  return (dispatch, getState) => {
-    dispatch(initGetLists()).then(() => {
-      console.log(getState());
-    })
-  }
-}
+/*
+*
+* END OF INIT SEQUENCE LOGIC
+*
+*/
 
 
 export function selectList(selectedListId) {
