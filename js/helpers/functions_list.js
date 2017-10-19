@@ -21,20 +21,10 @@ export function addListItems(listOfLists, selectedListId, listItemsValuesArray) 
 * input: listOfLists, id of list currently in editor, if of list item to change, increase or decrease
 * return: updated listOfLists
 */
-export function changeVote(listOfLists, selectedListId, targetListItemId, type) {
-
-  if(!['increase','decrease'].includes(type)){
-    console.log('Error... changeVote only takes increase or decrease as type argument');
-    return theList;
-  }
+export function changeVote(listOfLists, selectedListId, targetListItemId, newVotes) {
 
   let newList = fromJS(getListBySelectedListId(listOfLists, selectedListId));
   let indexOfItemToUpdate = getListItemIndexFromId(newList, targetListItemId);
-
-  let newVotes;
-  let currentVotes = newList.getIn([indexOfItemToUpdate,'votes'])
-
-  newVotes = type === 'increase' ? (currentVotes + 1) : (currentVotes - 1);
 
   newList = newList.setIn([indexOfItemToUpdate, 'votes'], newVotes);
 
@@ -115,5 +105,7 @@ export function updateListOfLists(listOfLists, selectedListId, newList) {
 
   let newListOfLists = fromJS(listOfLists);
 
-  return newListOfLists.setIn([selectedListId, 'list'], newList).toJS();
+  let id = getListItemIndexFromId(newListOfLists,selectedListId);
+
+  return newListOfLists.setIn([id, 'list'], newList).toJS();
 }

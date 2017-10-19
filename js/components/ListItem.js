@@ -15,7 +15,8 @@ export default class ListItem extends Component {
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
     this.renderRemoveButton = this.renderRemoveButton.bind(this);
-    this.renderPostAdminMeta =this.renderPostAdminMeta.bind(this);
+    this.renderPostAdminMeta = this.renderPostAdminMeta.bind(this);
+    this.renderMedia = this.renderMedia.bind(this);
   }
 
   increaseVote() {
@@ -58,6 +59,13 @@ export default class ListItem extends Component {
     }
   }
 
+  renderMedia() {
+
+    return (
+      <img src={this.props.item.values.postMedia.postImage.src} />
+    );
+  }
+
   render() {
 
     var mainWidth = this.props.isAdmin ? 'col-10' : 'col-12';
@@ -81,7 +89,7 @@ export default class ListItem extends Component {
               {this.props.item.values.postContent.title.rendered}
             </div>
             <div className="col-2 list-featured-image">
-              <img src={this.props.item.values.postMedia.postImage.src} />
+              {this.renderMedia()}
             </div>
             <div
                 className="col-1 vote-button vote-down"

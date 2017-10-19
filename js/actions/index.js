@@ -58,8 +58,10 @@ export function init() {
             listItem.values.postMedia.postImage.src = response.filter( fetchedMedia => {
               return fetchedMedia.data.id === listItem.values.postContent["featured_media"];
             })[0].data.guid.rendered;
-          })
+          });
         });
+
+
 
         dispatch({
           type: INIT_FETCHED_MEDIA,
@@ -97,7 +99,11 @@ export function initPopulateLists() {
 
             if(listItem.acf.included_in_lists.split(",").includes(String(list.id))){
 
-              // structure of list item object initialised here
+              /*
+              *
+              * Structure of list item object initialised here
+              *
+              */
               let finalListItem = {
                 id: listItem.id,
                 values: {
@@ -128,8 +134,7 @@ export function initPopulateLists() {
         }); //end map
 
         dispatch({
-          type: INIT_POPULATED_LISTS_SUCCESS,
-          payload: populatedLists,
+          type: INIT_POPULATED_LISTS_SUCCESS
         });
 
         return populatedLists;
@@ -294,32 +299,60 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 }
 
 export function increaseVote(listOfLists, selectedListId, targetListItemId) {
-  return {
-    type: INCREASE_VOTE,
-    payload: {
-      listOfLists: listOfLists,
-      selectedListId: selectedListId,
-      targetListItemId: targetListItemId
-    }
-  }
+
+  let currentVotes = getCurrentVotes(listOfLists, selectedListId, targetListItemId);
+
+  let newVotes =  (parseInt(currentVotes) + 1).toString();
+
+  return dispatch => {
+
+   let request = new wpRequest();
+   let voteRequest = request.postNewVotes( targetListItemId, newVotes );
+
+   dispatch({
+     type: INCREASE_VOTE,
+     payload: voteRequest,
+     meta: {
+       listOfLists: listOfLists,
+       selectedListId: selectedListId,
+       targetListItemId: targetListItemId,
+       newVotes: newVotes
+     }
+   });
+ }
 }
 
 export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
-  return {
-    type: DECREASE_VOTE,
-    payload: {
-      listOfLists: listOfLists,
-      selectedListId: selectedListId,
-      targetListItemId: targetListItemId
-    }
-  }
+
+  let currentVotes = getCurrentVotes(listOfLists, selectedListId, targetListItemId);
+
+  let newVotes =  (parseInt(currentVotes) - 1).toString();
+
+  return dispatch => {
+
+   let request = new wpRequest();
+   let voteRequest = request.postNewVotes( targetListItemId, newVotes );
+
+   dispatch({
+     type: DECREASE_VOTE,
+     payload: voteRequest,
+     meta: {
+       listOfLists: listOfLists,
+       selectedListId: selectedListId,
+       targetListItemId: targetListItemId,
+       newVotes: newVotes
+     }
+   });
+ }
 }
 
+function getCurrentVotes(listOfLists, selectedListId, targetListItemId) {
 
+  let currentList = listOfLists.filter( list => {
+    return list.id === selectedListId;
+  })[0];
 
-export function getListMedia( getURL ) {
-  return {
-    type: GET_LIST_MEDIA,
-
-  }
+  return currentList.list.filter( listItem => {
+    return listItem.id === targetListItemId;
+  })[0].votes;
 }

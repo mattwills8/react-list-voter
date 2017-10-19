@@ -37,10 +37,14 @@ export default function(state=listOfLists, action) {
   switch(action.type) {
 
     case INIT_FETCHED_MEDIA:
-      return action.payload;
 
-    case INIT_POPULATED_LISTS_SUCCESS:
-      return action.payload;
+      var initSortedLists = action.payload.map( list => {
+
+        list.list = sortListItemsByVotes(list.list);
+        return list;
+      })
+
+      return initSortedLists;
 
 
     case ADD_LIST:
@@ -69,8 +73,6 @@ export default function(state=listOfLists, action) {
 
     case BULK_ADD_LIST_ITEM:
 
-      console.log(action.payload.valuesToAdd);
-
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
 
@@ -95,11 +97,11 @@ export default function(state=listOfLists, action) {
       return updateListOfLists(action.payload.listOfLists, action.payload.selectedListId, shortenedList);
 
 
-    case INCREASE_VOTE:
-      return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'increase');
+    case `${INCREASE_VOTE}_FULFILLED`:
+      return changeVote( action.meta.listOfLists, action.meta.selectedListId, action.meta.targetListItemId, action.meta.newVotes);
 
-    case DECREASE_VOTE:
-      return changeVote( action.payload.listOfLists, action.payload.selectedListId, action.payload.targetListItemId, 'decrease');
+    case `${DECREASE_VOTE}_FULFILLED`:
+      return changeVote( action.meta.listOfLists, action.meta.selectedListId, action.meta.targetListItemId, action.meta.newVotes);
 
 
     default:
