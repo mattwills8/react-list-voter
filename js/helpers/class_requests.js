@@ -79,11 +79,11 @@ export class wpRequest {
   postNewListsIn( postId, newListsIn ) {
 
     var headersObj = {
-      lists_in: newListsIn,
+      in_lists: newListsIn,
       post_id: postId
     }
 
-    return this.post('list_voter_rest_server/lists-in/', headersObj);
+    return this.post('list_voter_rest_server/in-lists/', headersObj);
   }
 
   postNewVotes( postId, newVotes ) {
@@ -101,6 +101,9 @@ export class wpRequest {
     var config = {
       headers: headersObj
     }
+
+    console.log(config);
+    console.log(`${this.ROOT_URL}${endpoint}`);
 
     return axios.post(
       `${this.ROOT_URL}${endpoint}`,

@@ -10,6 +10,7 @@ import reducers from '../reducers';
 import List from '../containers/List';
 import ListSelector from '../containers/ListSelector';
 
+// set up store
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
     applyMiddleware(
@@ -18,6 +19,7 @@ const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
     )
 ));
 
+// get data domain from html - ie display admin or certain list
 const dataDomain = document.getElementById('app').dataset.domain;
 
 

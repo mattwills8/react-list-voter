@@ -17,6 +17,11 @@ import {
   GET_LIST_ITEM_MEDIA
 } from './types.js';
 
+import {
+  getNewListItemIncludedInListsField,
+  listItemIsAlreadyInList,
+} from '../helpers/functions_requestHelpers';
+
 
 /*
 *
@@ -215,45 +220,71 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
 
   return dispatch => {
+    //get list items
     posts.then((response) => {
 
       let posts = response.data;
       let postMediaLinks = [];
+      let updateListsContainedInRequestPromises = [];
 
-      //assigns post object to each value to add
-      valuesToAdd.forEach( valueToAdd => {
+      valuesToAdd.map( valueToAdd => {
+
+        // match on id to get the correct post to add to the list item
         let postToAdd = posts.filter(function( post ) {
           return post.id == valueToAdd.postID;
         })[0];
 
+        // add post to the list item
         valueToAdd.postContent = postToAdd || null;
+
+        // add promise of api call to update list item 'lists in' field
+        let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId );
+
+        // dont send request if item was already in list
+        if( listItemIsAlreadyInList( postToAdd.acf["included_in_lists"], selectedListId ) ) {
+          return;
+        }
+
+        updateListsContainedInRequestPromises.push(request.postNewListsIn( valueToAdd.postID , newIncludedInLists ));
+
       });
 
-      //gets media link for each value to add
-      var itemsProcessed = 0;
-      valuesToAdd.forEach( valueToAdd => {
+      // continue with media requests once lists have been updated
+      Promise.all(updateListsContainedInRequestPromises).then( () => {
 
-        request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
-          .then((mediaResponse) => {
-            valueToAdd.postMedia = {
-              postImage: {
-                src: mediaResponse.data.guid.rendered
-              }
-            };
+        //gets media link for each value to add
+        var itemsProcessed = 0;
+        valuesToAdd.forEach( valueToAdd => {
 
-            //when all api requests have been processed, dispatch the action creator
-            itemsProcessed++;
-            if(itemsProcessed === valuesToAdd.length) {
-              dispatch({
-                type: BULK_ADD_LIST_ITEM,
-                payload: {
-                  listOfLists: listOfLists,
-                  selectedListId: selectedListId,
-                  valuesToAdd: valuesToAdd,
+          //skip iteration if it's already in the list
+          if( listItemIsAlreadyInList( valueToAdd.postContent.acf["included_in_lists"], selectedListId ) ) {
+            return;
+          }
+
+          request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
+            .then((mediaResponse) => {
+
+              // add image src to new list item from media response
+              valueToAdd.postMedia = {
+                postImage: {
+                  src: mediaResponse.data.guid.rendered
                 }
-              });
-            }
-          });
+              };
+
+              //when all api requests have been processed, dispatch the action creator
+              itemsProcessed++;
+              if(itemsProcessed === valuesToAdd.length) {
+                dispatch({
+                  type: BULK_ADD_LIST_ITEM,
+                  payload: {
+                    listOfLists: listOfLists,
+                    selectedListId: selectedListId,
+                    valuesToAdd: valuesToAdd,
+                  }
+                });
+              }
+            });
+        });
       });
     })
   };
@@ -268,21 +299,44 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
 
   return dispatch => {
+
+    // get post to add to list item from wp
     postToAdd.then((post) => {
 
-      let mediaRequest = request.getUrl(`${mediaRoot}${post.data["featured_media"]}`);
-
+      // add post content to list item
       valueToAdd.postContent = post.data;
 
-      dispatch({
-        type: ADD_LIST_ITEM,
-        payload: mediaRequest,
-        meta: {
-          listOfLists: listOfLists,
-          selectedListId: selectedListId,
-          valueToAdd: valueToAdd,
-        }
-      });
+      // send request for post media
+      let mediaRequest = request.getUrl(`${mediaRoot}${post.data["featured_media"]}`)
+        .then( mediaResponse => {
+
+          // add image src to new list item from media response
+          valueToAdd.postMedia = {
+            postImage: {
+              src: mediaResponse.data.guid.rendered
+            }
+          };
+
+          let newIncludedInLists = getNewListItemIncludedInListsField( post.data.acf["included_in_lists"], selectedListId );
+
+          // exit action creator if item was already in list
+          if( newIncludedInLists == post.data.acf["included_in_lists"] ) {
+            return;
+          }
+
+          let newIncludedInRequest = request.postNewListsIn( valueToAdd.postID , newIncludedInLists );
+
+          //pass request to update 'included_in_lists' field to redux promise and dispatch
+          dispatch({
+            type: ADD_LIST_ITEM,
+            payload: newIncludedInRequest,
+            meta: {
+              listOfLists: listOfLists,
+              selectedListId: selectedListId,
+              valueToAdd: valueToAdd,
+            }
+          });
+        });
     })
   };
 }

@@ -77,13 +77,6 @@ export default function(state=listOfLists, action) {
 
 
     case `${ADD_LIST_ITEM}_FULFILLED`:
-
-      action.meta.valueToAdd.postMedia = {
-        postImage: {
-          src: action.payload.data.guid.rendered
-        }
-      };
-
       return addListItems(action.meta.listOfLists, action.meta.selectedListId,[action.meta.valueToAdd]);
 
 
