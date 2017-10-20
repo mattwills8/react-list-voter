@@ -82,6 +82,7 @@ class Reactjs_List_Voter {
 		$this->define_custom_fields();
 		$this->define_custom_endpoints();
 		$this->define_custom_tax();
+		$this->define_shortcodes();
 
 	}
 
@@ -150,6 +151,11 @@ class Reactjs_List_Voter {
 		 * The class responsible for adding custom taxonomies
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-tax/custom-tax.php';
+
+		/**
+		 * The class responsible for adding shorcodes
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/shortcodes/shortcodes.php';
 
 
 		$this->loader = new Reactjs_List_Voter_Loader();
@@ -233,6 +239,12 @@ class Reactjs_List_Voter {
 		$this->loader->add_action( 'init',  $custom_tax, 'add_custom_tax' );
 	}
 
+	private function define_shortcodes() {
+
+		$shortcodes = new Reactjs_List_Voter_Shortcodes();
+
+		add_shortcode( 'list_voter', array( $shortcodes ,'list_voter_shortcode') );
+	}
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *

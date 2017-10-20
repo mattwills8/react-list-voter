@@ -77,7 +77,8 @@ class List extends Component {
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
         />
-        <ListMeta />
+        <ListMeta
+          selectedListId={this.props.selectedListId} />
       </div>
     );
   }

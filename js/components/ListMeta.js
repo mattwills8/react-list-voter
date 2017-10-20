@@ -16,7 +16,7 @@ export default class ListMeta extends Component {
           </h4>
           <h5
             className="text-center">
-            [shortcode]
+            {`[list_voter list_id="${this.props.selectedListId}"]`}
           </h5>
         </div>
       </div>
