@@ -86,6 +86,7 @@ class List_Voter_REST_Server extends WP_REST_Controller {
 
     return get_terms(array(
       'taxonomy' => 'lists',
+      'hide_empty' => false,
     ));
 
 
