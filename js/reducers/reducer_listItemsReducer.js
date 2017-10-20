@@ -42,7 +42,7 @@ export default function(state=listOfLists, action) {
 
         list.list = sortListItemsByVotes(list.list);
         return list;
-      })
+      });
 
       return initSortedLists;
 
@@ -72,7 +72,6 @@ export default function(state=listOfLists, action) {
 
 
     case BULK_ADD_LIST_ITEM:
-
       return addListItems(action.payload.listOfLists, action.payload.selectedListId,action.payload.valuesToAdd);
 
 

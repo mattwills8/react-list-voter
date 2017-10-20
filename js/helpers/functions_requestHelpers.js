@@ -1,6 +1,31 @@
 
 
-export function getNewListItemIncludedInListsField( currentListsInField, listToAdd ) {
+export function getNewListItemIncludedInListsField( currentListsInField, listId, type ) {
+
+  switch(type) {
+
+    case 'add':
+      return addNewListToIncludedInListsField( currentListsInField, listId);
+
+    case 'remove':
+      return removeListFromIncludedInListsField( currentListsInField, listId);
+
+    }
+}
+
+
+export function removeListFromIncludedInListsField( currentListsInField, listId) {
+
+  let listToRemove = listId.toString();
+
+  return splitIntoArrayAndRemoveBlanks( currentListsInField )
+    .splice(listId)
+    .join();
+
+}
+
+
+export function addNewListToIncludedInListsField( currentListsInField, listToAdd) {
 
   listToAdd = listToAdd.toString();
 

@@ -118,6 +118,10 @@ export function initPopulateLists() {
                     content: listItem.content,
                     "featured_media": listItem["featured_media"],
                     "_links": listItem["_links"],
+                    acf: {
+                        "list_voter_votes": "",
+                        "included_in_lists": ""
+                    },
                   },
                   postMedia: {
                     tmp: "",
@@ -211,6 +215,9 @@ export function removeList(listOfLists, listId) {
   };
 }
 
+
+
+
 export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 
   let request = new wpRequest;
@@ -238,7 +245,7 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
         valueToAdd.postContent = postToAdd || null;
 
         // add promise of api call to update list item 'lists in' field
-        let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId );
+        let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId, 'add' );
 
         // dont send request if item was already in list
         if( listItemIsAlreadyInList( postToAdd.acf["included_in_lists"], selectedListId ) ) {
@@ -291,6 +298,9 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   };
 }
 
+
+
+
 export function addListItem(listOfLists, selectedListId, valueToAdd) {
 
   let request = new wpRequest;
@@ -318,7 +328,7 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
             }
           };
 
-          let newIncludedInLists = getNewListItemIncludedInListsField( post.data.acf["included_in_lists"], selectedListId );
+          let newIncludedInLists = getNewListItemIncludedInListsField( post.data.acf["included_in_lists"], selectedListId, 'add' );
 
           // exit action creator if item was already in list
           if( newIncludedInLists == post.data.acf["included_in_lists"] ) {
@@ -342,16 +352,39 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
   };
 }
 
+
+
+
 export function removeListItem(listOfLists, selectedListId, targetListItemId) {
-  return {
-    type: REMOVE_LIST_ITEM,
-    payload: {
-      listOfLists: listOfLists,
-      selectedListId: selectedListId,
-      targetListItemId: targetListItemId
-    }
-  };
+
+  let request = new wpRequest();
+
+  let list = listOfLists.filter( list => {
+    return list.id === selectedListId;
+  })[0];
+
+  let listItem = list.list.filter( listItem => {
+    return listItem.id === targetListItemId;
+  })[0];
+
+  return dispatch => {
+
+    let newIncludedInLists = getNewListItemIncludedInListsField( listItem.values.postContent.acf["included_in_lists"], selectedListId, 'remove' );
+
+    let newIncludedInRequest = request.postNewListsIn( listItem.id , newIncludedInLists );
+
+    dispatch( {
+      type: REMOVE_LIST_ITEM,
+      payload: {
+        listOfLists: listOfLists,
+        selectedListId: selectedListId,
+        targetListItemId: targetListItemId
+      }
+    });
+  }
 }
+
+
 
 export function increaseVote(listOfLists, selectedListId, targetListItemId) {
 
@@ -377,6 +410,9 @@ export function increaseVote(listOfLists, selectedListId, targetListItemId) {
  }
 }
 
+
+
+
 export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
 
   let currentVotes = getCurrentVotes(listOfLists, selectedListId, targetListItemId);
@@ -400,6 +436,9 @@ export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
    });
  }
 }
+
+
+
 
 function getCurrentVotes(listOfLists, selectedListId, targetListItemId) {
 
