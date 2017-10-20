@@ -244,31 +244,29 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
         // add post to the list item
         valueToAdd.postContent = postToAdd || null;
 
-        // add promise of api call to update list item 'lists in' field
-        let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId, 'add' );
+        // only send request if item wasnt already in a list
+        // note we could turn this off one day and included_in_lists logic would still work, issue was we only had one field for storing votes
+        if( ! postToAdd.acf["included_in_lists"].length > 0) {
 
-        // dont send request if item was already in list
-        if( listItemIsAlreadyInList( postToAdd.acf["included_in_lists"], selectedListId ) ) {
-          return;
+          // add promise of api call to update list item 'lists in' field
+          let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId, 'add' );
+
+          updateListsContainedInRequestPromises.push(request.postNewListsIn( valueToAdd.postID , newIncludedInLists ));
         }
+      });
 
-        updateListsContainedInRequestPromises.push(request.postNewListsIn( valueToAdd.postID , newIncludedInLists ));
-
+      // remove new ones that are already in a list
+      valuesToAdd = valuesToAdd.filter( valueToAdd => {
+        return (valueToAdd.postContent.acf["included_in_lists"].length == 0);
       });
 
       // continue with media requests once lists have been updated
       Promise.all(updateListsContainedInRequestPromises).then( () => {
 
-        //gets media link for each value to add
         var itemsProcessed = 0;
         valuesToAdd.forEach( (valueToAdd, index) => {
 
-          //skip iteration if it's already in the list
-          if( listItemIsAlreadyInList( valueToAdd.postContent.acf["included_in_lists"], selectedListId ) ) {
-            valuesToAdd.splice(index);
-            return;
-          }
-
+          //gets media link for each value to add
           request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
             .then((mediaResponse) => {
 
@@ -314,6 +312,12 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
     // get post to add to list item from wp
     postToAdd.then((post) => {
 
+      // exit action creator if item was already in a list
+      // note we could turn this off one day and included_in_lists logic would still work, issue was we only had one field for storing votes
+      if( post.data.acf["included_in_lists"].length > 0) {
+        return;
+      }
+
       // add post content to list item
       valueToAdd.postContent = post.data;
 
@@ -329,11 +333,6 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
           };
 
           let newIncludedInLists = getNewListItemIncludedInListsField( post.data.acf["included_in_lists"], selectedListId, 'add' );
-
-          // exit action creator if item was already in list
-          if( newIncludedInLists == post.data.acf["included_in_lists"] ) {
-            return;
-          }
 
           let newIncludedInRequest = request.postNewListsIn( valueToAdd.postID , newIncludedInLists );
 
@@ -359,13 +358,7 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 
   let request = new wpRequest();
 
-  let list = listOfLists.filter( list => {
-    return list.id === selectedListId;
-  })[0];
-
-  let listItem = list.list.filter( listItem => {
-    return listItem.id === targetListItemId;
-  })[0];
+  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
 
   return dispatch => {
 
@@ -388,14 +381,15 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 
 export function increaseVote(listOfLists, selectedListId, targetListItemId) {
 
-  let currentVotes = getCurrentVotes(listOfLists, selectedListId, targetListItemId);
+  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
+  let currentVotes = listItem.votes;
 
   let newVotes =  (parseInt(currentVotes) + 1).toString();
 
   return dispatch => {
 
    let request = new wpRequest();
-   let voteRequest = request.postNewVotes( targetListItemId, newVotes );
+   let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
 
    dispatch({
      type: INCREASE_VOTE,
@@ -415,14 +409,15 @@ export function increaseVote(listOfLists, selectedListId, targetListItemId) {
 
 export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
 
-  let currentVotes = getCurrentVotes(listOfLists, selectedListId, targetListItemId);
+  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
+  let currentVotes = listItem.votes;
 
   let newVotes =  (parseInt(currentVotes) - 1).toString();
 
   return dispatch => {
 
    let request = new wpRequest();
-   let voteRequest = request.postNewVotes( targetListItemId, newVotes );
+   let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
 
    dispatch({
      type: DECREASE_VOTE,
@@ -442,11 +437,16 @@ export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
 
 function getCurrentVotes(listOfLists, selectedListId, targetListItemId) {
 
+  return getCurrentListItem(listOfLists, selectedListId, targetListItemId).votes;
+}
+
+function getCurrentListItem(listOfLists, selectedListId, targetListItemId) {
+
   let currentList = listOfLists.filter( list => {
     return list.id === selectedListId;
   })[0];
 
   return currentList.list.filter( listItem => {
     return listItem.id === targetListItemId;
-  })[0].votes;
+  })[0];
 }
