@@ -254,10 +254,11 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 
         //gets media link for each value to add
         var itemsProcessed = 0;
-        valuesToAdd.forEach( valueToAdd => {
+        valuesToAdd.forEach( (valueToAdd, index) => {
 
           //skip iteration if it's already in the list
           if( listItemIsAlreadyInList( valueToAdd.postContent.acf["included_in_lists"], selectedListId ) ) {
+            valuesToAdd.splice(index);
             return;
           }
 
