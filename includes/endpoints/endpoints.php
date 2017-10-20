@@ -24,6 +24,14 @@ class List_Voter_REST_Server extends WP_REST_Controller {
         )
     ));
 
+    $base      = 'new-list';
+    register_rest_route( $namespace, '/' . $base, array(
+      array(
+          'methods'         => WP_REST_Server::EDITABLE,
+          'callback'        => array( $this, 'new_list' ),
+        )
+    ));
+
     $base      = 'lists';
     register_rest_route( $namespace, '/' . $base, array(
       array(
@@ -58,6 +66,18 @@ class List_Voter_REST_Server extends WP_REST_Controller {
 
     return false;
 
+
+  }
+
+  public function new_list( WP_REST_Request $request ){
+
+    $name = $request->get_header( 'name' );
+
+    if( wp_insert_term( $name, 'lists') ) {
+      return get_terms(array( 'taxonomy' => 'lists',));
+    };
+
+    return false;
 
   }
 
