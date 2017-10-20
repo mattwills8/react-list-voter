@@ -76,6 +76,15 @@ export class wpRequest {
   *
   */
 
+  postNewList( listName ) {
+
+    var headersObj = {
+      name: listName
+    }
+
+    return this.post('list_voter_rest_server/new-list/', headersObj);
+  }
+
   postNewListsIn( postId, newListsIn ) {
 
     var headersObj = {

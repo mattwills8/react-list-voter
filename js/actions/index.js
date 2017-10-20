@@ -196,13 +196,21 @@ export function selectList(selectedListId) {
 }
 
 export function addList(listOfLists, valueToAdd) {
-  return {
-    type: ADD_LIST,
-    payload: {
-      listOfLists: listOfLists,
-      valueToAdd: valueToAdd
-    }
-  };
+
+  let request = new wpRequest();
+
+  return dispatch => {
+
+    return request.postNewList( valueToAdd ).then( () => {
+      dispatch( {
+        type: ADD_LIST,
+        payload: {
+          listOfLists: listOfLists,
+          valueToAdd: valueToAdd
+        }
+      });
+    });
+  }
 }
 
 export function removeList(listOfLists, listId) {
