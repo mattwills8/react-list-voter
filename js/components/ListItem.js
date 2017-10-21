@@ -72,8 +72,7 @@ export default class ListItem extends Component {
 
       <div className="row">
         <li
-          className={`${mainWidth} list-item`}
-          onClick={() => {this.showHideListItemContent()}}>
+          className={`${mainWidth} list-item`} >
           <div
             className="row">
             <div
@@ -84,7 +83,9 @@ export default class ListItem extends Component {
             <div className="col-1 votes-wrapper">
               {this.props.item.votes}
             </div>
-            <div className="col-7">
+            <div
+              className="col-7"
+              onClick={() => {this.showHideListItemContent()}}>
               {this.props.item.values.postContent.title.rendered}
             </div>
             <div className="col-2 list-featured-image">
