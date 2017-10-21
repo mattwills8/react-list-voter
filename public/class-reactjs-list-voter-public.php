@@ -73,7 +73,8 @@ class Reactjs_List_Voter_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/reactjs-list-voter-public.css', array(), $this->version, 'all' );
+		 wp_enqueue_style( $this->plugin_name, REACTJS_LIST_VOTER_BUILD_DIR . 'main.bundle.css', array(), $this->version, 'all' );
+ 		 wp_enqueue_style( $this->plugin_name.'font-awesome-4.7.0', REACTJS_LIST_VOTER_BUILD_DIR . 'vendor/font-awesome-4.7.0/css/font-awesome.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -97,7 +98,7 @@ class Reactjs_List_Voter_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/reactjs-list-voter-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script( 'wp-api' );
 	}
 
 }

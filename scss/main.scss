@@ -1,36 +1,129 @@
 @import "~bootstrap/scss/bootstrap";
 
+$largeFontSize: 1.5em;
+$smallFontSize: 0.8em;
+$primaryColor: rgb(255, 90, 0);
+$primaryColor-1: rgba(255,90,0,0.1);
+
+.centerElement {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.list-voter-admin-wrapper {
+  margin-bottom: 30px;
+}
+
 #app {
 
   .hidden {
     visibility: hidden;
   }
 
-  .list-selector {
-    height: 500px;
-    overflow-y: scroll;
-  }
-
+  //applies to list items and list of lists
   .list-wrapper {
     text-align: center;
-    height: 400px;
-    overflow-y: scroll;
+    overflow-x: hidden;
 
     li {
-      border: 1px solid grey;
-      padding: 10px 0;
-      border-radius: 5px;
+      border: {
+        bottom: 1px solid grey;
+      }
+      border-radius: 1px;
       text-align: center;
       list-style: none;
+    }
+  }
+
+  //aplies to just list of list
+  .list-selector {
+
+    .list-wrapper {
+      margin: 20px;
+
+      li {
+        border-left: 4px solid blue;
+        padding: 10px 0;
+      }
+    }
+  }
+
+  //applies to just list items
+  .list-editor {
+
+    &.admin {
+
+      .add-list-item-form {
+        height: 40px;
+      }
+
+      ul {
+        height: 370px;
+        overflow-y: scroll;
+      }
+    }
+
+
+    .list-item {
+
+      margin-bottom: 0;
+      border-left: 4px solid $primaryColor;
+      padding: 10px;
+
+      .vote {
+        font-size: $largeFontSize;
+        font-weight: bold;
+      }
+
+      .vote-button {
+        padding: 0;
+        font-size: $smallFontSize;
+        text-align: center;
+
+        i, span {
+          @extend .centerElement;
+        }
+
+        i {
+          color: $primaryColor;
+          font-size: $largeFontSize;
+        }
+      }
+
+      .list-item-title, .list-item-read-more {
+
+        span {
+          @extend .centerElement;
+          text-align: center;
+        }
+      }
+
+      .list-item-title {
+        font-size: $largeFontSize;
+        font-weight: bold;
+      }
+
+      .list-item-read-more {
+        font-size: $smallFontSize;
+      }
 
       .list-featured-image {
-        height: 65px;
-        width: 65px;
+        height: 80px;
+        width: 100%;
 
         img {
           max-height: 100%;
-          object-position: 50% 50%;
+          object-fit: cover;
         }
+      }
+    }
+
+    .list-item-content {
+      border-right: 4px solid $primaryColor;
+      background: $primaryColor-1;
+
+      div {
+        padding: 0 15px;
       }
     }
   }

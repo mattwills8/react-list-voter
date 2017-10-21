@@ -26,7 +26,7 @@ class ListSelector extends Component {
               {item.name}
             </li>
             <div
-              className="col-6">
+              className="col-6 my-auto">
               <RemoveButton
                 btnContent="X"
                 onClick={this.props.removeList}

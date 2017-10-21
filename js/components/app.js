@@ -34,11 +34,11 @@ class App extends React.Component {
     if(this.props.dataDomain === 'admin') {
       return (
         <div className="row">
-          <div className="col-4 list-selector">
+          <div className="col-sm-4 list-selector">
             <ListSelector
               isAdmin={true}/>
           </div>
-          <div className="col-8 list-editor">
+          <div className="col-sm-8 list-editor admin">
             <List
               isAdmin={true}/>
           </div>

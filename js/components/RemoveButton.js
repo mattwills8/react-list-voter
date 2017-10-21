@@ -41,7 +41,7 @@ export default class RemoveButton extends Component {
 
     return (
       <button
-        className={"btn "+buttonState.class}
+        className={`btn ${buttonState.class}`}
         onClick={this.handleRemoveButtonClick}
         >{buttonState.content}
       </button>

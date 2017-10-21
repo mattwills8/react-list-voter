@@ -47,7 +47,7 @@ export default class ListItem extends Component {
     if(this.props.isAdmin){
       return (
         <div
-          className="col-2">
+          className="col-2 my-auto">
           <RemoveButton
             btnContent="X"
             onClick={this.props.removeListItem}
@@ -75,26 +75,43 @@ export default class ListItem extends Component {
           className={`${mainWidth} list-item`} >
           <div
             className="row">
+            <div className="col-md-2 my-auto votes-wrapper">
+              <span className="vote">
+                {this.props.item.votes}
+              </span>
+            </div>
             <div
-              className="col-1 vote-button vote-up"
+              className="col-md-1 my-auto vote-button vote-up"
               onClick={() => {this.increaseVote()}}>
-              <i className="fa fa-arrow-up" aria-hidden="true"></i>
+              <div className="my-auto row">
+                <i className="fa fa-arrow-up align-middle" aria-hidden="true"></i>
+              </div>
+              <div className="my-auto row">
+                <span>Vote Up</span>
+              </div>
             </div>
-            <div className="col-1 votes-wrapper">
-              {this.props.item.votes}
-            </div>
-            <div
-              className="col-7"
-              onClick={() => {this.showHideListItemContent()}}>
-              {this.props.item.values.postContent.title.rendered}
-            </div>
-            <div className="col-2 list-featured-image">
+            <div className="col-md-2 my-auto list-featured-image">
               {this.renderMedia()}
             </div>
             <div
-                className="col-1 vote-button vote-down"
+              className="col-md-6 my-auto"
+              onClick={() => {this.showHideListItemContent()}}>
+              <div className="row my-auto list-item-title">
+                <span>{this.props.item.values.postContent.title.rendered}</span>
+              </div>
+              <div className="row my-auto list-item-read-more">
+                <span>Click to Read More...</span>
+              </div>
+            </div>
+            <div
+                className="col-md-1 my-auto vote-button vote-down"
                 onClick={() => {this.decreaseVote()}}>
-              <i className="fa fa-arrow-down" aria-hidden="true"></i>
+              <div className="my-auto row">
+                <i className="fa fa-arrow-down" aria-hidden="true"></i>
+              </div>
+              <div className="my-auto row">
+                <span>Vote Down</span>
+              </div>
             </div>
           </div>
         </li>

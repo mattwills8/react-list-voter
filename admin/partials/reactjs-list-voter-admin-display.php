@@ -14,6 +14,9 @@
 
 ?>
 
-<div id="app" data-domain="admin" class="container">
-  <script type="text/javascript" src="<?php echo  REACTJS_LIST_VOTER_BUILD_DIR . 'app.bundle.js'; ?>" charset="utf-8"></script>
+<div class="list-voter-admin-wrapper">
+  <h2>List Voter Admin Area</h2>
+  <div id="app" data-domain="admin" class="container">
+    <script type="text/javascript" src="<?php echo  REACTJS_LIST_VOTER_BUILD_DIR . 'app.bundle.js'; ?>" charset="utf-8"></script>
+  </div>
 </div>

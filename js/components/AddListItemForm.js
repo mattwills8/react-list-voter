@@ -39,9 +39,9 @@ export default class AddListItemButton extends Component {
   render(){
 
     return (
-      <div>
+      <div className="row">
         <form
-          className="input-group add-list-item-form"
+          className="col-8 input-group add-list-item-form"
           onSubmit={this.handleSubmit}>
           <input
             placeholder="Post ID"
@@ -56,6 +56,7 @@ export default class AddListItemButton extends Component {
           </button>
         </form>
         <BulkAddListItemsForm
+          className="col-4"
           listOfLists={this.props.listOfLists}
           selectedListId={this.props.selectedListId}
           bulkAddListItems={this.props.bulkAddListItems}
