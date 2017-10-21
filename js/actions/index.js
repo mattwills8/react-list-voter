@@ -202,7 +202,8 @@ export function addList(listOfLists, valueToAdd) {
 
   return dispatch => {
 
-    return request.postNewList( valueToAdd ).then( () => {
+    return request.postNewList( valueToAdd.name ).then( () => {
+
       dispatch( {
         type: ADD_LIST,
         payload: {
@@ -217,17 +218,37 @@ export function addList(listOfLists, valueToAdd) {
 export function removeList(listOfLists, listId) {
 
   let request = new wpRequest();
+  let listsItemsInList = listOfLists.filter( list => {
+    return list.id === listId;
+  })[0].list;
 
   return dispatch => {
 
+    //remove list from terms in db
     return request.postRemoveList( listId ).then( () => {
-      dispatch( {
-        type: REMOVE_LIST,
-        payload: {
-          listOfLists: listOfLists,
-          listId: listId
-        }
+
+      let removeListFromListItemPromises = [];
+
+      //remove list from 'lists in' field for each list item in the list
+      listsItemsInList.map( listItem => {
+
+        let newIncludedInLists = getNewListItemIncludedInListsField( listItem.values.postContent.acf["included_in_lists"], listId, 'remove' );
+
+        removeListFromListItemPromises.push(request.postNewListsIn( listItem.values.postID , newIncludedInLists ));
+        removeListFromListItemPromises.push(request.postNewVotes( listItem.values.postID, "" ));
       });
+
+      //once all requests are done dispatch the aciton
+      Promise.all(removeListFromListItemPromises).then( () => {
+
+        dispatch( {
+          type: REMOVE_LIST,
+          payload: {
+            listOfLists: listOfLists,
+            listId: listId
+          }
+        });
+      })
     });
   }
 }
@@ -268,6 +289,7 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
           // add promise of api call to update list item 'lists in' field
           let newIncludedInLists = getNewListItemIncludedInListsField( postToAdd.acf["included_in_lists"], selectedListId, 'add' );
 
+          // add promise of api call to upate list item votes field
           updateListsContainedInRequestPromises.push(request.postNewListsIn( valueToAdd.postID , newIncludedInLists ));
         }
       });
@@ -381,15 +403,23 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 
     let newIncludedInLists = getNewListItemIncludedInListsField( listItem.values.postContent.acf["included_in_lists"], selectedListId, 'remove' );
 
-    let newIncludedInRequest = request.postNewListsIn( listItem.id , newIncludedInLists );
+    let promises = [
+      request.postNewListsIn( listItem.id , newIncludedInLists ),
+      request.postNewVotes( listItem.id , "" ),
+    ];
 
-    dispatch( {
-      type: REMOVE_LIST_ITEM,
-      payload: {
-        listOfLists: listOfLists,
-        selectedListId: selectedListId,
-        targetListItemId: targetListItemId
-      }
+
+    Promise.all(promises).then( () => {
+
+      // send action once both are complete
+      dispatch( {
+        type: REMOVE_LIST_ITEM,
+        payload: {
+          listOfLists: listOfLists,
+          selectedListId: selectedListId,
+          targetListItemId: targetListItemId
+        }
+      });
     });
   }
 }
