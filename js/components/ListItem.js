@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import RemoveButton from './RemoveButton';
+import ListItemContent from './ListItemContent';
 
 export default class ListItem extends Component {
 
@@ -9,13 +10,14 @@ export default class ListItem extends Component {
     super(props);
 
     this.state = {
-      removeButtonStatus: 'notClicked'
+      removeButtonStatus: 'notClicked',
+      postContentStatus: 'hidden',
     };
 
     this.increaseVote = this.increaseVote.bind(this);
     this.decreaseVote = this.decreaseVote.bind(this);
+    this.showHideListItemContent = this.showHideListItemContent.bind(this);
     this.renderRemoveButton = this.renderRemoveButton.bind(this);
-    this.renderPostAdminMeta = this.renderPostAdminMeta.bind(this);
     this.renderMedia = this.renderMedia.bind(this);
   }
 
@@ -27,6 +29,20 @@ export default class ListItem extends Component {
     this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
   }
 
+  showHideListItemContent() {
+    if(this.state.postContentStatus === 'hidden') {
+      this.setState( {
+        removeButtonStatus: this.state.removeButtonStatus,
+        postContentStatus: 'visible',
+       } );
+       return;
+    }
+    this.setState( {
+      removeButtonStatus: this.state.removeButtonStatus,
+      postContentStatus: 'hidden',
+     } );
+  }
+
   renderRemoveButton() {
     if(this.props.isAdmin){
       return (
@@ -36,24 +52,6 @@ export default class ListItem extends Component {
             btnContent="X"
             onClick={this.props.removeListItem}
             onClickArgs={[this.props.listOfLists, this.props.selectedListId, this.props.item.id]}/>
-        </div>
-      );
-    }
-  }
-
-  renderPostAdminMeta() {
-    if(this.props.isAdmin){
-      return (
-        <div
-          className="row">
-          <div
-            className="col-6">
-            <h5>Post ID:</h5>
-          </div>
-          <div
-            className="col-6">
-            <h6>{this.props.item.values.postID}</h6>
-          </div>
         </div>
       );
     }
@@ -74,7 +72,8 @@ export default class ListItem extends Component {
 
       <div className="row">
         <li
-          className={`${mainWidth} list-item`}>
+          className={`${mainWidth} list-item`}
+          onClick={() => {this.showHideListItemContent()}}>
           <div
             className="row">
             <div
@@ -99,16 +98,11 @@ export default class ListItem extends Component {
           </div>
         </li>
         {this.renderRemoveButton()}
-        <div
-          className={mainWidth}>
-          {this.renderPostAdminMeta()}
-          <div
-            className="row">
-            <div
-              dangerouslySetInnerHTML={{__html: this.props.item.values.postContent.content.rendered}} >
-            </div>
-          </div>
-        </div>
+        <ListItemContent
+          visisbility={this.state.postContentStatus}
+          mainWidth={mainWidth}
+          item={this.props.item}
+          isAdmin={this.props.isAdmin} />
       </div>
     );
 
