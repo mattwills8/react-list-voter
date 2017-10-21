@@ -32,6 +32,14 @@ class List_Voter_REST_Server extends WP_REST_Controller {
         )
     ));
 
+    $base      = 'remove-list';
+    register_rest_route( $namespace, '/' . $base, array(
+      array(
+          'methods'         => WP_REST_Server::EDITABLE,
+          'callback'        => array( $this, 'remove_list' ),
+        )
+    ));
+
     $base      = 'lists';
     register_rest_route( $namespace, '/' . $base, array(
       array(
@@ -74,7 +82,19 @@ class List_Voter_REST_Server extends WP_REST_Controller {
     $name = $request->get_header( 'name' );
 
     if( wp_insert_term( $name, 'lists') ) {
-      return get_terms(array( 'taxonomy' => 'lists',));
+      return $this->get_list_terms();;
+    };
+
+    return false;
+
+  }
+
+  public function remove_list( WP_REST_Request $request ){
+
+    $term_id = $request->get_header( 'id' );
+
+    if( wp_delete_term( $term_id, 'lists') ) {
+      return $this->get_list_terms();
     };
 
     return false;
@@ -84,11 +104,18 @@ class List_Voter_REST_Server extends WP_REST_Controller {
   public function get_lists( WP_REST_Request $request ){
 
 
-    return get_terms(array(
+    return $this->get_list_terms();
+
+
+  }
+
+  public function get_list_terms() {
+
+    $args = array(
       'taxonomy' => 'lists',
       'hide_empty' => false,
-    ));
+    );
 
-
+    return get_terms($args);
   }
 }

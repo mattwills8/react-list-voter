@@ -197,6 +197,7 @@ export function selectList(selectedListId) {
 
 export function addList(listOfLists, valueToAdd) {
 
+  //TODO: DOUBLE CHECK THIS ALWAYS PASSES THE RIGHT VALUE THEN SET UP API WITH REMOVE LIST
   let request = new wpRequest();
 
   return dispatch => {
@@ -214,13 +215,21 @@ export function addList(listOfLists, valueToAdd) {
 }
 
 export function removeList(listOfLists, listId) {
-  return {
-    type: REMOVE_LIST,
-    payload: {
-      listOfLists: listOfLists,
-      listId: listId
-    }
-  };
+
+  let request = new wpRequest();
+
+  return dispatch => {
+
+    return request.postRemoveList( listId ).then( () => {
+      dispatch( {
+        type: REMOVE_LIST,
+        payload: {
+          listOfLists: listOfLists,
+          listId: listId
+        }
+      });
+    });
+  }
 }
 
 
