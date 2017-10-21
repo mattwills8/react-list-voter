@@ -85,6 +85,15 @@ export class wpRequest {
     return this.post('list_voter_rest_server/new-list/', headersObj);
   }
 
+  postRemoveList( listId ) {
+
+    var headersObj = {
+      id: listId
+    }
+
+    return this.post('list_voter_rest_server/remove-list/', headersObj);
+  }
+
   postNewListsIn( postId, newListsIn ) {
 
     var headersObj = {
