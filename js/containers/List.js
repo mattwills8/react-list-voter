@@ -31,6 +31,7 @@ class List extends Component {
     this.props.init();
 
     this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
+    this.renderListMeta = this.renderListMeta.bind(this);
   }
 
   renderAddListItemForm() {
@@ -43,6 +44,17 @@ class List extends Component {
           bulkAddListItems={this.props.bulkAddListItems}
           addListItem={this.props.addListItem}
         />
+      );
+    }
+  }
+
+
+  renderListMeta() {
+
+    if(this.props.isAdmin){
+      return (
+        <ListMeta
+          selectedListId={this.props.selectedListId} />
       );
     }
   }
@@ -77,8 +89,7 @@ class List extends Component {
           increaseVote={this.props.increaseVote}
           decreaseVote={this.props.decreaseVote}
         />
-        <ListMeta
-          selectedListId={this.props.selectedListId} />
+      {this.renderListMeta()}
       </div>
     );
   }

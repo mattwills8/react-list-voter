@@ -197,7 +197,6 @@ export function selectList(selectedListId) {
 
 export function addList(listOfLists, valueToAdd) {
 
-  //TODO: DOUBLE CHECK THIS ALWAYS PASSES THE RIGHT VALUE THEN SET UP API WITH REMOVE LIST
   let request = new wpRequest();
 
   return dispatch => {
@@ -261,7 +260,7 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   let request = new wpRequest;
   let posts = request.getListItemPosts();
 
-  //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
+  //TODO: change this to generic givne by live domains
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
 
   return dispatch => {
@@ -343,7 +342,7 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
   let request = new wpRequest;
   let postToAdd = request.getListItemPostsById( valueToAdd.postID );
 
-  //TODO: change this get request to the url given by post["_links"]["wp:featuredmedia"][0].href
+  //TODO: change this to generic media root for live domains
   let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
 
   return dispatch => {
