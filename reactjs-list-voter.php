@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       React.js List Voter
  * Plugin URI:        https://github.com/mattwills8/react-list-voter
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Allows you to create and manage lists which can be included with a shortcode for users to vote list items up and down
  * Version:           1.0.0
  * Author:            Matt Wills
  * Author URI:        https://github.com/mattwills8
