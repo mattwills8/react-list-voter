@@ -75,6 +75,15 @@ export class wpRequest {
   *
   */
 
+  getMediaURL( id ) {
+
+    var headersObj = {
+      id: id
+    }
+
+    return this.post('list_voter_rest_server/media-url/', headersObj);
+  }
+
   postNewList( listName ) {
 
     var headersObj = {

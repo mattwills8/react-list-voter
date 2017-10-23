@@ -47,6 +47,14 @@ class List_Voter_REST_Server extends WP_REST_Controller {
           'callback'        => array( $this, 'get_lists' ),
         )
     ));
+
+    $base      = 'media-url';
+    register_rest_route( $namespace, '/' . $base, array(
+      array(
+          'methods'         => WP_REST_Server::EDITABLE,
+          'callback'        => array( $this, 'get_media_url' ),
+        )
+    ));
   }
 
   public function change_vote( WP_REST_Request $request ){
@@ -105,9 +113,19 @@ class List_Voter_REST_Server extends WP_REST_Controller {
 
 
     return $this->get_list_terms();
-
-
   }
+
+
+  public function get_media_url( WP_REST_Request $request ){
+
+    $media_id = $request->get_header( 'id' );
+
+    return array(
+      "mediaId" => $media_id,
+      "url" => wp_get_attachment_url( $media_id )
+    );
+  }
+
 
   public function get_list_terms() {
 

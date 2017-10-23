@@ -48,7 +48,7 @@ export function init() {
       listOfLists.forEach( list => {
         list.list.map( listItem => {
 
-          let mediaRequest = initRequest.getUrl(`${mediaRoot}${listItem.values.postContent["featured_media"]}`);
+          let mediaRequest = initRequest.getMediaURL( listItem.values.postContent["featured_media"] )
           listItem.values.postMedia.tmp = mediaRequest;
           mediaPromises.push(mediaRequest);
         });
@@ -56,13 +56,14 @@ export function init() {
 
       // set image src from promise response
       Promise.all(mediaPromises).then( (response) => {
+        console.log(response);
         listOfLists.forEach( list => {
           list.list.map( listItem => {
 
-            // match correct list item image src from list of promises
+            // set correct list item image src from list of promises
             listItem.values.postMedia.postImage.src = response.filter( fetchedMedia => {
-              return fetchedMedia.data.id === listItem.values.postContent["featured_media"];
-            })[0].data.guid.rendered;
+              return fetchedMedia.data.mediaId == listItem.values.postContent["featured_media"];
+            })[0].data.url;
           });
         });
 
@@ -304,14 +305,14 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
         valuesToAdd.forEach( (valueToAdd, index) => {
 
           //gets media link for each value to add
-          request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
+          request.getMediaURL( valueToAdd.postContent["featured_media"] )
             .then(
             mediaResponse => {
 
               // add image src to new list item from media response
               valueToAdd.postMedia = {
                 postImage: {
-                  src: mediaResponse.data.guid.rendered
+                  src: mediaResponse.data.url
                 }
               };
 
@@ -382,14 +383,14 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
       valueToAdd.postContent = post.data;
 
       // send request for post media
-      let mediaRequest = request.getUrl(`${mediaRoot}${post.data["featured_media"]}`)
+      let mediaRequest = request.getMediaURL( valueToAdd.postContent["featured_media"] )
         .then(
         mediaResponse => {
 
           // add image src to new list item from media response
           valueToAdd.postMedia = {
             postImage: {
-              src: mediaResponse.data.guid.rendered
+              src: mediaResponse.data.url
             }
           };
 
