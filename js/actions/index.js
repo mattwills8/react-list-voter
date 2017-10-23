@@ -427,27 +427,32 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 
 export function increaseVote(listOfLists, selectedListId, targetListItemId) {
 
-  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
-  let currentVotes = listItem.votes;
+  let request = new wpRequest();
 
-  let newVotes =  (parseInt(currentVotes) + 1).toString();
+  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
 
   return dispatch => {
 
-   let request = new wpRequest();
-   let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
+    return request.getListItemPostsById( listItem.values.postID ).then( response => {
 
-   dispatch({
-     type: INCREASE_VOTE,
-     payload: voteRequest,
-     meta: {
-       listOfLists: listOfLists,
-       selectedListId: selectedListId,
-       targetListItemId: targetListItemId,
-       newVotes: newVotes
-     }
-   });
- }
+      let currentVotes = response.data.acf["list_voter_votes"];
+
+      let newVotes =  (parseInt(currentVotes) + 1).toString();
+
+      let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
+
+      dispatch({
+        type: INCREASE_VOTE,
+        payload: voteRequest,
+        meta: {
+          listOfLists: listOfLists,
+          selectedListId: selectedListId,
+          targetListItemId: targetListItemId,
+          newVotes: newVotes
+        }
+      });
+    });
+  }
 }
 
 
@@ -455,27 +460,32 @@ export function increaseVote(listOfLists, selectedListId, targetListItemId) {
 
 export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
 
-  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
-  let currentVotes = listItem.votes;
+  let request = new wpRequest();
 
-  let newVotes =  (parseInt(currentVotes) - 1).toString();
+  let listItem = getCurrentListItem(listOfLists, selectedListId, targetListItemId);
 
   return dispatch => {
 
-   let request = new wpRequest();
-   let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
+    return request.getListItemPostsById( listItem.values.postID ).then( response => {
 
-   dispatch({
-     type: DECREASE_VOTE,
-     payload: voteRequest,
-     meta: {
-       listOfLists: listOfLists,
-       selectedListId: selectedListId,
-       targetListItemId: targetListItemId,
-       newVotes: newVotes
-     }
-   });
- }
+      let currentVotes = response.data.acf["list_voter_votes"];
+
+      let newVotes =  (parseInt(currentVotes) - 1).toString();
+
+      let voteRequest = request.postNewVotes( listItem.values.postID, newVotes );
+
+      dispatch({
+        type: DECREASE_VOTE,
+        payload: voteRequest,
+         meta: {
+           listOfLists: listOfLists,
+           selectedListId: selectedListId,
+           targetListItemId: targetListItemId,
+           newVotes: newVotes
+         }
+       });
+    });
+  }
 }
 
 
