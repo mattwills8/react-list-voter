@@ -75,13 +75,13 @@ export default class ListItem extends Component {
           className={`${mainWidth} list-item`} >
           <div
             className="row">
-            <div className="col-md-2 my-auto votes-wrapper">
+            <div className="col-lg-2 my-auto votes-wrapper">
               <span className="vote">
                 {this.props.item.votes}
               </span>
             </div>
             <div
-              className="col-md-1 my-auto vote-button vote-up"
+              className="col-lg-1 my-auto vote-button vote-up"
               onClick={() => {this.increaseVote()}}>
               <div className="my-auto row">
                 <i className="fa fa-arrow-up align-middle" aria-hidden="true"></i>
@@ -90,11 +90,11 @@ export default class ListItem extends Component {
                 <span>Vote Up</span>
               </div>
             </div>
-            <div className="col-md-2 my-auto list-featured-image">
+            <div className="col-lg-2 my-auto list-featured-image">
               {this.renderMedia()}
             </div>
             <div
-              className="col-md-6 my-auto"
+              className="col-lg-6 my-auto"
               onClick={() => {this.showHideListItemContent()}}>
               <div className="row my-auto list-item-title">
                 <span>{this.props.item.values.postContent.title.rendered}</span>
@@ -104,7 +104,7 @@ export default class ListItem extends Component {
               </div>
             </div>
             <div
-                className="col-md-1 my-auto vote-button vote-down"
+                className="col-lg-1 my-auto vote-button vote-down"
                 onClick={() => {this.decreaseVote()}}>
               <div className="my-auto row">
                 <i className="fa fa-arrow-down" aria-hidden="true"></i>

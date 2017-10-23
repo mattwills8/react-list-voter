@@ -1,4 +1,42 @@
-var listOfLists = [
+var   listOfLists = [
+  { name: 'Loading...',
+    id: 0,
+    list: [
+      { id: 0,
+        values: {
+          postID:'',
+          postContent: {
+            title: {
+              rendered: 'Loading...'
+            },
+            content: {
+              rendered: 'Loading...'
+            },
+            "_links": {
+              "wp:featuredmedia" : [
+                  {
+                      "embeddable": true,
+                      "href": ""
+                  }
+              ],
+            }
+          },
+          postMedia: {
+            postImage : {
+              src: ''
+            }
+          },
+        },
+        votes:''
+      },
+    ]
+  }
+];
+
+export default listOfLists;
+
+/*
+var   listOfLists = [
   { name: 'activities',
     id: 0,
     list: [
@@ -336,5 +374,4 @@ var listOfLists = [
       },
   ]}
 ];
-
-export default listOfLists;
+*/

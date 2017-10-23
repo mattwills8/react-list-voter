@@ -5,7 +5,7 @@ $smallFontSize: 0.8em;
 $primaryColor: rgb(255, 90, 0);
 $primaryColor-1: rgba(255,90,0,0.1);
 
-.centerElement {
+%centerElement {
   display: inline-block;
   margin: 0 auto;
 }
@@ -19,6 +19,26 @@ $primaryColor-1: rgba(255,90,0,0.1);
   .hidden {
     visibility: hidden;
     height: 0;
+  }
+
+  .list-voter-loader-wrapper {
+
+    width: 100%;
+
+    .list-voter-loader {
+      @extend %centerElement;
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid $primaryColor; /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
   }
 
   //applies to list items and list of lists
@@ -70,6 +90,7 @@ $primaryColor-1: rgba(255,90,0,0.1);
       margin-bottom: 0;
       border-left: 4px solid $primaryColor;
       padding: 10px;
+      padding-right: 30px;
 
       .vote {
         font-size: $largeFontSize;
@@ -82,19 +103,24 @@ $primaryColor-1: rgba(255,90,0,0.1);
         text-align: center;
 
         i, span {
-          @extend .centerElement;
+          @extend %centerElement;
         }
 
         i {
+          margin-top: 7px;
           color: $primaryColor;
           font-size: $largeFontSize;
+        }
+
+        span {
+          margin-bottom: 10px;
         }
       }
 
       .list-item-title, .list-item-read-more {
 
         span {
-          @extend .centerElement;
+          @extend %centerElement;
           text-align: center;
         }
       }
@@ -102,10 +128,19 @@ $primaryColor-1: rgba(255,90,0,0.1);
       .list-item-title {
         font-size: $largeFontSize;
         font-weight: bold;
+
+        span {
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
       }
 
       .list-item-read-more {
         font-size: $smallFontSize;
+
+        span {
+          margin-bottom: 5px;
+        }
       }
 
       .list-featured-image {
@@ -113,7 +148,7 @@ $primaryColor-1: rgba(255,90,0,0.1);
         width: 100%;
 
         img {
-          @extend .centerElement;
+          @extend %centerElement;
           max-height: 100%;
           object-fit: cover;
         }

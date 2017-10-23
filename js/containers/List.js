@@ -62,11 +62,24 @@ class List extends Component {
 
   render() {
 
-    //Don't render a list on admin init
+    //What to render if lists haven't loaded yet
     if(this.props.listOfLists.filter( list => {return list.id === this.props.selectedListId}).length === 0){
+      //Don't render a list on admin init
+      if(this.props.isAdmin) {
+        return (
+          <h1>Select List To Edit</h1>
+        );
+      }
+
       return (
-        <h1>Select List To Edit</h1>
+        <div>
+          <h3>Loading List...</h3>
+          <div className="list-voter-loader-wrapper">
+            <div className="list-voter-loader"></div>
+          </div> 
+        </div>
       );
+
     }
 
     var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
