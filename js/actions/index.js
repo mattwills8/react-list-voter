@@ -260,8 +260,7 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
   let request = new wpRequest;
   let posts = request.getListItemPosts();
 
-  //TODO: change this to generic givne by live domains
-  let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
+  let mediaRoot = request.ROOT_URL_FOR_MEDIA;
 
   return dispatch => {
     //get list items
@@ -306,7 +305,8 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
 
           //gets media link for each value to add
           request.getUrl(`${mediaRoot}${valueToAdd.postContent["featured_media"]}`)
-            .then((mediaResponse) => {
+            .then(
+            mediaResponse => {
 
               // add image src to new list item from media response
               valueToAdd.postMedia = {
@@ -327,7 +327,29 @@ export function bulkAddListItems(listOfLists, selectedListId, valuesToAdd) {
                   }
                 });
               }
-            });
+            },
+            error => {
+              // add image src to new list item from media response
+              valueToAdd.postMedia = {
+                postImage: {
+                  src: ''
+                }
+              };
+
+              //when all api requests have been processed, dispatch the action creator
+              itemsProcessed++;
+              if(itemsProcessed === valuesToAdd.length) {
+                dispatch({
+                  type: BULK_ADD_LIST_ITEM,
+                  payload: {
+                    listOfLists: listOfLists,
+                    selectedListId: selectedListId,
+                    valuesToAdd: valuesToAdd,
+                  }
+                });
+              }
+            }
+          );
         });
       });
     })
@@ -342,8 +364,7 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
   let request = new wpRequest;
   let postToAdd = request.getListItemPostsById( valueToAdd.postID );
 
-  //TODO: change this to generic media root for live domains
-  let mediaRoot = 'http://localhost/WooCommerce%20Test%20Site/index.php/wp-json/wp/v2/media/';
+  let mediaRoot = request.ROOT_URL_FOR_MEDIA;
 
   return dispatch => {
 
@@ -353,6 +374,7 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
       // exit action creator if item was already in a list
       // note we could turn this off one day and included_in_lists logic would still work, issue was we only had one field for storing votes
       if( post.data.acf["included_in_lists"].length > 0) {
+        alert('Oops! This list item is already in a list!');
         return;
       }
 
@@ -361,7 +383,8 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
 
       // send request for post media
       let mediaRequest = request.getUrl(`${mediaRoot}${post.data["featured_media"]}`)
-        .then( mediaResponse => {
+        .then(
+        mediaResponse => {
 
           // add image src to new list item from media response
           valueToAdd.postMedia = {
@@ -384,7 +407,32 @@ export function addListItem(listOfLists, selectedListId, valueToAdd) {
               valueToAdd: valueToAdd,
             }
           });
-        });
+        },
+        //if no featured image, set src as empty string and continue
+        error => {
+
+          valueToAdd.postMedia = {
+            postImage: {
+              src: ''
+            }
+          };
+
+          let newIncludedInLists = getNewListItemIncludedInListsField( post.data.acf["included_in_lists"], selectedListId, 'add' );
+
+          let newIncludedInRequest = request.postNewListsIn( valueToAdd.postID , newIncludedInLists );
+
+          //pass request to update 'included_in_lists' field to redux promise and dispatch
+          dispatch({
+            type: ADD_LIST_ITEM,
+            payload: newIncludedInRequest,
+            meta: {
+              listOfLists: listOfLists,
+              selectedListId: selectedListId,
+              valueToAdd: valueToAdd,
+            }
+          });
+        }
+      );
     })
   };
 }

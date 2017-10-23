@@ -34,7 +34,6 @@ export function addNewListToIncludedInListsField( currentListsInField, listToAdd
 
     //return same list if already included
     if(currentListsInFieldArray.includes(listToAdd)){
-      console.log('This post is already in this list!');
       return currentListsInField;
     }
 
