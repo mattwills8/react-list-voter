@@ -27,22 +27,44 @@ class ListItem extends Component {
 
   increaseVote() {
 
+    // ignore cookies in admin area
+    if(this.props.isAdmin) {
+      this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+      return;
+    }
+
+    // only increase vote if they haven't already voted
     if( ! this.cookies.get(this.cookieName) ) {
 
       this.cookies.set(this.cookieName, true);
 
       this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+
+      return;
     }
+
+    alert('Oops! You already voted for this item!');
   }
 
   decreaseVote() {
 
+    // ignore cookies in admin area
+    if(this.props.isAdmin) {
+      this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+      return;
+    }
+
+    // only decrease vote if they haven't already voted
     if( ! this.cookies.get(this.cookieName) ) {
 
       this.cookies.set(this.cookieName, true);
 
       this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+
+      return;
     }
+
+    alert('Oops! You already voted for this item!');
   }
 
   showHideListItemContent() {
