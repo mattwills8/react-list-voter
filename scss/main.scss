@@ -81,6 +81,33 @@ $primaryColor-1: rgba(255,90,0,0.1);
       ul {
         height: 370px;
         overflow-y: scroll;
+
+        .list-featured-image {
+          @extend %centerElement;
+          height: 80px;
+
+          img {
+            @extend %centerElement;
+            height: 100%;
+            min-width: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    &:not(.admin) {
+      .list-featured-image {
+        @extend %centerElement;
+        height: 80px;
+        max-width: 150px;
+
+        img {
+          @extend %centerElement;
+          height: 100%;
+          min-width: 100%;
+          object-fit: cover;
+        }
       }
     }
 
@@ -140,17 +167,6 @@ $primaryColor-1: rgba(255,90,0,0.1);
 
         span {
           margin-bottom: 5px;
-        }
-      }
-
-      .list-featured-image {
-        height: 80px;
-        width: 100%;
-
-        img {
-          @extend %centerElement;
-          max-height: 100%;
-          object-fit: cover;
         }
       }
     }
