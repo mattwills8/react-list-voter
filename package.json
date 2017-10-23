@@ -15,6 +15,7 @@
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "react": "^15.0.0",
+    "react-cookie": "^2.1.1",
     "react-dom": "^15.0.0",
     "react-file-reader": "^1.1.2",
     "react-flip-move": "^2.9.15",

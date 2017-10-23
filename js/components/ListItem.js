@@ -1,13 +1,17 @@
 //core
 import React, { Component } from 'react';
+import { withCookies, Cookies } from 'react-cookie';
 
 import RemoveButton from './RemoveButton';
 import ListItemContent from './ListItemContent';
 
-export default class ListItem extends Component {
+class ListItem extends Component {
 
   constructor(props) {
     super(props);
+
+    this.cookies = new Cookies;
+    this.cookieName = this.props.item.values.postID;
 
     this.state = {
       removeButtonStatus: 'notClicked',
@@ -22,11 +26,23 @@ export default class ListItem extends Component {
   }
 
   increaseVote() {
-    this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+
+    if( ! this.cookies.get(this.cookieName) ) {
+
+      this.cookies.set(this.cookieName, true);
+
+      this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+    }
   }
 
   decreaseVote() {
-    this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+
+    if( ! this.cookies.get(this.cookieName) ) {
+
+      this.cookies.set(this.cookieName, true);
+
+      this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
+    }
   }
 
   showHideListItemContent() {
@@ -126,3 +142,5 @@ export default class ListItem extends Component {
 
   };
 }
+
+export default withCookies(ListItem);
