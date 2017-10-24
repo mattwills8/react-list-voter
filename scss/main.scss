@@ -16,6 +16,16 @@ $primaryColor-1: rgba(255,90,0,0.1);
 
 #app {
 
+  //prevent margin from being set by client's theme
+  ul {
+
+    li {
+      margin-left: 0px !important;
+    }
+  }
+
+  //
+
   .hidden {
     visibility: hidden;
     height: 0;

@@ -60,9 +60,9 @@ class List_Voter_REST_Server extends WP_REST_Controller {
   public function change_vote( WP_REST_Request $request ){
 
     $new_votes = $request->get_header( 'votes' );
-    $id = $request->get_header( 'post_id' );
+    $id = (int)$request->get_header( 'post_id' );
 
-    if (  update_field( 'list_voter_votes', $new_votes, $id) ){
+    if (  update_post_meta( $id, 'list_voter_votes', $new_votes) ){
       return get_post( $id );
     }
 
@@ -74,9 +74,9 @@ class List_Voter_REST_Server extends WP_REST_Controller {
   public function change_in_lists( WP_REST_Request $request ){
 
     $new_in_lists = $request->get_header( 'in_lists' );
-    $id = $request->get_header( 'post_id' );
+    $id = (int)$request->get_header( 'post_id' );
 
-    if (  update_field( 'included_in_lists', $new_in_lists, $id) ){
+    if (  update_post_meta( $id, 'included_in_lists', $new_in_lists) ){
       return get_post( $id );
     }
 

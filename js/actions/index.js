@@ -56,7 +56,6 @@ export function init() {
 
       // set image src from promise response
       Promise.all(mediaPromises).then( (response) => {
-        console.log(response);
         listOfLists.forEach( list => {
           list.list.map( listItem => {
 
@@ -449,11 +448,12 @@ export function removeListItem(listOfLists, selectedListId, targetListItemId) {
 
   return dispatch => {
 
-    let newIncludedInLists = getNewListItemIncludedInListsField( listItem.values.postContent.acf["included_in_lists"], selectedListId, 'remove' );
+    //let newIncludedInLists = getNewListItemIncludedInListsField( listItem.values.postContent.acf["included_in_lists"], selectedListId, 'remove' );
 
     let promises = [
-      request.postNewListsIn( listItem.id , newIncludedInLists ),
-      request.postNewVotes( listItem.id , "" ),
+      //request.postNewListsIn( listItem.id , newIncludedInLists ),
+      request.postNewListsIn( listItem.id , "" ),
+      request.postNewVotes( listItem.id , 0 ),
     ];
 
 
@@ -485,6 +485,10 @@ export function increaseVote(listOfLists, selectedListId, targetListItemId) {
     return request.getListItemPostsById( listItem.values.postID ).then( response => {
 
       let currentVotes = response.data.acf["list_voter_votes"];
+
+      if( ! currentVotes ) {
+        currentVotes = 0;
+      }
 
       let newVotes =  (parseInt(currentVotes) + 1).toString();
 
@@ -518,6 +522,10 @@ export function decreaseVote(listOfLists, selectedListId, targetListItemId) {
     return request.getListItemPostsById( listItem.values.postID ).then( response => {
 
       let currentVotes = response.data.acf["list_voter_votes"];
+
+      if( ! currentVotes ) {
+        currentVotes = 0;
+      }
 
       let newVotes =  (parseInt(currentVotes) - 1).toString();
 

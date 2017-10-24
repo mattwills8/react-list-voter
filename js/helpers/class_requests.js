@@ -105,8 +105,8 @@ export class wpRequest {
   postNewListsIn( postId, newListsIn ) {
 
     var headersObj = {
-      in_lists: newListsIn,
-      post_id: postId
+      inlists: newListsIn,
+      postid: postId
     }
 
     return this.post('list_voter_rest_server/in-lists/', headersObj);
@@ -116,7 +116,7 @@ export class wpRequest {
 
     var headersObj = {
       votes: newVotes,
-      post_id: postId
+      postid: postId
     }
 
     return this.post('list_voter_rest_server/votes/', headersObj);
