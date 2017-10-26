@@ -31,6 +31,7 @@ class List extends Component {
     this.props.init();
 
     this.renderAddListItemForm = this.renderAddListItemForm.bind(this);
+    this.renderListName = this.renderListName.bind(this);
     this.renderListMeta = this.renderListMeta.bind(this);
   }
 
@@ -44,6 +45,20 @@ class List extends Component {
           bulkAddListItems={this.props.bulkAddListItems}
           addListItem={this.props.addListItem}
         />
+      );
+    }
+  }
+
+  renderListName() {
+
+    if(this.props.idAdmin){
+      return (
+        <div
+          className="row">
+          <h2 className="col-12 text-center">
+            {currentListName}
+          </h2>
+        </div>
       );
     }
   }
@@ -76,7 +91,7 @@ class List extends Component {
           <h3>Loading List...</h3>
           <div className="list-voter-loader-wrapper">
             <div className="list-voter-loader"></div>
-          </div> 
+          </div>
         </div>
       );
 
@@ -88,12 +103,7 @@ class List extends Component {
     return (
       <div>
         {this.renderAddListItemForm()}
-        <div
-          className="row">
-          <h2 className="col-12 text-center">
-            {currentListName}
-          </h2>
-        </div>
+        (this.renderListName())
         <ListItems
           listOfLists={this.props.listOfLists}
           isAdmin={this.props.isAdmin}
