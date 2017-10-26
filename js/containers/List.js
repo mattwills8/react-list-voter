@@ -52,10 +52,8 @@ class List extends Component {
   renderListName() {
 
     var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
-    console.log(currentListName);
 
     if(this.props.isAdmin) {
-      console.log('true');
       return (
         <div
           className="row">

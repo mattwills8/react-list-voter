@@ -23,6 +23,7 @@ class ListItem extends Component {
     this.showHideListItemContent = this.showHideListItemContent.bind(this);
     this.renderRemoveButton = this.renderRemoveButton.bind(this);
     this.renderMedia = this.renderMedia.bind(this);
+    this.renderColorFromCookies = this.renderColorFromCookies.bind(this);
   }
 
   increaseVote() {
@@ -36,7 +37,7 @@ class ListItem extends Component {
     // only increase vote if they haven't already voted
     if( ! this.cookies.get(this.cookieName) ) {
 
-      this.cookies.set(this.cookieName, true);
+      this.cookies.set(this.cookieName, 'voteUp');
 
       this.props.increaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
 
@@ -57,7 +58,7 @@ class ListItem extends Component {
     // only decrease vote if they haven't already voted
     if( ! this.cookies.get(this.cookieName) ) {
 
-      this.cookies.set(this.cookieName, true);
+      this.cookies.set(this.cookieName, 'voteDown');
 
       this.props.decreaseVote(this.props.listOfLists, this.props.selectedListId, this.props.item.id);
 
@@ -102,6 +103,22 @@ class ListItem extends Component {
     );
   }
 
+
+  //set item elements to different colour depending on how user voted
+  renderColorFromCookies() {
+
+    if( this.cookies.get(this.cookieName) === 'voteUp') {
+      return 'list-voter-green';
+    }
+
+    if( this.cookies.get(this.cookieName) === 'voteDown') {
+      return 'list-voter-red';
+    }
+
+    return '';
+  }
+
+
   render() {
 
     var mainWidth = this.props.isAdmin ? 'col-10' : 'col-12';
@@ -110,7 +127,7 @@ class ListItem extends Component {
 
       <div className="row">
         <li
-          className={`${mainWidth} list-item`} >
+          className={`${mainWidth} list-item ${this.renderColorFromCookies()}`} >
           <div
             className="row">
             <div className="col-lg-2 my-auto votes-wrapper">
@@ -122,7 +139,7 @@ class ListItem extends Component {
               className="col-lg-1 my-auto vote-button vote-up"
               onClick={() => {this.increaseVote()}}>
               <div
-                className="circle">
+                className={`circle my-auto ${this.renderColorFromCookies()}`}>
                 <i className="fa fa-arrow-up align-middle" aria-hidden="true"></i>
               </div>
             </div>
@@ -136,7 +153,7 @@ class ListItem extends Component {
               </div>
               <div className="row my-auto list-item-read-more">
                 <button
-                  className="btn"
+                  className={`btn ${this.renderColorFromCookies()}`}
                   onClick={() => {this.showHideListItemContent()}} >
                   Read More
                 </button>
@@ -146,7 +163,7 @@ class ListItem extends Component {
               className="col-lg-1 my-auto vote-button vote-down"
               onClick={() => {this.decreaseVote()}}>
               <div
-                className="circle">
+                className={`circle my-auto ${this.renderColorFromCookies()}`}>
                 <i className="fa fa-arrow-down" aria-hidden="true"></i>
               </div>
             </div>

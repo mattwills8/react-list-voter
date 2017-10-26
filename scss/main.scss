@@ -2,13 +2,38 @@
 
 $largeFontSize: 1.5em;
 $smallFontSize: 0.8em;
-$primaryColor: rgb(255, 90, 0);
+
+$primaryColor: rgba(255, 90, 0, 1);
 $primaryColor-1: rgba(255,90,0,0.1);
 $primaryColor-8: rgba(255,90,0,0.8);
+
+$votedGreenColor: rgba(0, 128, 0, 1);
+$votedGreenColor-8: rgba(0, 128, 0, 0.8);
+$votedRedColor: rgba(255, 0, 0, 1);
+$votedRedColor-8: rgba(255, 0, 0, 0.8);
 
 %centerElement {
   display: inline-block;
   margin: 0 auto;
+}
+
+%votedBackgroundColor {
+
+  &.list-voter-green {
+    background-color: $votedGreenColor;
+
+    &:hover {
+      background-color: $votedGreenColor-8;
+    }
+  }
+
+  &.list-voter-red {
+    background-color: $votedRedColor;
+
+    &:hover {
+      background-color: $votedRedColor-8;
+    }
+  }
 }
 
 .list-voter-admin-wrapper {
@@ -130,6 +155,14 @@ $primaryColor-8: rgba(255,90,0,0.8);
       padding: 10px;
       padding-right: 30px;
 
+      &.list-voter-green {
+        border-left: 4px solid $votedGreenColor;
+      }
+
+      &.list-voter-red {
+        border-left: 4px solid $votedRedColor;
+      }
+
       .vote {
         font-size: $largeFontSize;
         font-weight: bold;
@@ -146,6 +179,12 @@ $primaryColor-8: rgba(255,90,0,0.8);
           height: 40px;
           width: 40px;
           background-color: $primaryColor;
+
+          @extend %votedBackgroundColor;
+
+          &:hover {
+            background-color: $primaryColor-8;
+          }
 
           i {
             @extend %centerElement;
@@ -183,6 +222,8 @@ $primaryColor-8: rgba(255,90,0,0.8);
           @extend %centerElement;
           background-color: $primaryColor;
           color: white;
+
+          @extend %votedBackgroundColor;
 
           &:hover {
             background-color: $primaryColor-8;
