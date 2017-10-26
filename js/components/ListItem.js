@@ -121,34 +121,33 @@ class ListItem extends Component {
             <div
               className="col-lg-1 my-auto vote-button vote-up"
               onClick={() => {this.increaseVote()}}>
-              <div className="my-auto row">
+              <div
+                className="circle">
                 <i className="fa fa-arrow-up align-middle" aria-hidden="true"></i>
-              </div>
-              <div className="my-auto row">
-                <span>Vote Up</span>
               </div>
             </div>
             <div className="col-lg-2 my-auto list-featured-image">
               {this.renderMedia()}
             </div>
             <div
-              className="col-lg-6 my-auto"
-              onClick={() => {this.showHideListItemContent()}}>
+              className="col-lg-6 my-auto" >
               <div className="row my-auto list-item-title">
                 <span>{this.props.item.values.postContent.title.rendered}</span>
               </div>
               <div className="row my-auto list-item-read-more">
-                <span>Click to Read More...</span>
+                <button
+                  className="btn"
+                  onClick={() => {this.showHideListItemContent()}} >
+                  Read More
+                </button>
               </div>
             </div>
             <div
-                className="col-lg-1 my-auto vote-button vote-down"
-                onClick={() => {this.decreaseVote()}}>
-              <div className="my-auto row">
+              className="col-lg-1 my-auto vote-button vote-down"
+              onClick={() => {this.decreaseVote()}}>
+              <div
+                className="circle">
                 <i className="fa fa-arrow-down" aria-hidden="true"></i>
-              </div>
-              <div className="my-auto row">
-                <span>Vote Down</span>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ $largeFontSize: 1.5em;
 $smallFontSize: 0.8em;
 $primaryColor: rgb(255, 90, 0);
 $primaryColor-1: rgba(255,90,0,0.1);
+$primaryColor-8: rgba(255,90,0,0.8);
 
 %centerElement {
   display: inline-block;
@@ -139,19 +140,22 @@ $primaryColor-1: rgba(255,90,0,0.1);
         font-size: $smallFontSize;
         text-align: center;
 
-        i, span {
+        .circle {
           @extend %centerElement;
+          border-radius: 50%;
+          height: 40px;
+          width: 40px;
+          background-color: $primaryColor;
+
+          i {
+            @extend %centerElement;
+            margin-top: 7px;
+            color: white;
+            font-size: $largeFontSize;
+          }
         }
 
-        i {
-          margin-top: 7px;
-          color: $primaryColor;
-          font-size: $largeFontSize;
-        }
 
-        span {
-          margin-bottom: 10px;
-        }
       }
 
       .list-item-title, .list-item-read-more {
@@ -175,8 +179,14 @@ $primaryColor-1: rgba(255,90,0,0.1);
       .list-item-read-more {
         font-size: $smallFontSize;
 
-        span {
-          margin-bottom: 5px;
+        button {
+          @extend %centerElement;
+          background-color: $primaryColor;
+          color: white;
+
+          &:hover {
+            background-color: $primaryColor-8;
+          }
         }
       }
     }
@@ -186,6 +196,7 @@ $primaryColor-1: rgba(255,90,0,0.1);
       background: $primaryColor-1;
 
       div {
+        margin-top: 15px;
         padding: 0 15px;
       }
     }
