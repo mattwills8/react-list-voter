@@ -51,7 +51,11 @@ class List extends Component {
 
   renderListName() {
 
-    if(this.props.idAdmin){
+    var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
+    console.log(currentListName);
+
+    if(this.props.isAdmin) {
+      console.log('true');
       return (
         <div
           className="row">
@@ -96,8 +100,6 @@ class List extends Component {
       );
 
     }
-
-    var currentListName = getListObjectBySelectedListId(this.props.listOfLists, this.props.selectedListId).name;
 
     //main render
     return (
