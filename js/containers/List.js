@@ -103,7 +103,7 @@ class List extends Component {
     return (
       <div>
         {this.renderAddListItemForm()}
-        (this.renderListName())
+        {this.renderListName()}
         <ListItems
           listOfLists={this.props.listOfLists}
           isAdmin={this.props.isAdmin}
